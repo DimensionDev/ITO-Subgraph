@@ -1,6 +1,28 @@
-type ExampleEntity @entity {
+type Pool @entity {
   id: ID!
-  count: BigInt!
-  id: Bytes! # bytes32
-  claimer: Bytes! # address
+  contract_address: String!
+  pid: String! # pool id
+  password: String! # a password should keep locally
+  total: String!
+  total_remaining: String!
+  claim_remaining: String!
+  sender_address: String!
+  sender_name: String!
+  sender_message: String!
+  chain_id: BigInt!
+  start_time: Int!
+  end_time: Int!
+  creation_time: Int!
+  token: Token!
+  exchange_amount: [String!]!
+  exchange_token: [Token!]!
+}
+
+type Token @entity {
+  id: ID!
+  type: Int! # 0 - Ether, 1 - ERC20
+  name: String
+  symbol: String
+  decimals: Int!
+  chain_id: Int!
 }
