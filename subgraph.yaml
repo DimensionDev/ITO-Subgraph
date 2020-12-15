@@ -1,0 +1,32 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ITO
+    network: rinkeby
+    source:
+      address: "0x52ceb31d6c197b5c039786fbefd6a82df70fdfd6"
+      abi: ITO
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ClaimSuccess
+        - FillSuccess
+        - RefundSuccess
+        - Test
+      abis:
+        - name: ITO
+          file: ./abis/ITO.json
+      eventHandlers:
+        - event: ClaimSuccess(bytes32,address,uint256,address)
+          handler: handleClaimSuccess
+        - event: FillSuccess(uint256,bytes32,address,uint256,address,string,string)
+          handler: handleFillSuccess
+        - event: RefundSuccess(bytes32,address,uint256)
+          handler: handleRefundSuccess
+        - event: Test(uint256)
+          handler: handleTest
+      file: ./src/mapping.ts
