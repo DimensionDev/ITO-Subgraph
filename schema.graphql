@@ -1,24 +1,6 @@
-type Pool @entity {
-  id: ID!
-  contract_address: String!
-  pid: String! # pool id
-  password: String! # a password should keep locally
-  total: String!
-  total_remaining: String!
-  claim_remaining: String!
-  sender: Sender!
-  chain_id: BigInt!
-  start_time: Int!
-  end_time: Int!
-  creation_time: Int!
-  token: Token!
-  exchange_amount: [String!]!
-  exchange_token: [Token!]!
-}
-
 type Sender @entity {
   id: ID!
-  address: String!
+  address: Bytes!
   name: String!
   message: String!
 }
@@ -26,8 +8,34 @@ type Sender @entity {
 type Token @entity {
   id: ID!
   type: Int! # 0 - Ether, 1 - ERC20
+  address: Bytes!
   name: String
   symbol: String
-  decimals: Int!
+  decimals: BigInt!
   chain_id: Int!
+}
+
+type TransactionPoolMap @entity {
+  id: ID!
+  pid: String!
+  creation_time: BigInt!
+}
+
+type Pool @entity {
+  id: ID!
+  chain_id: Int!
+  contract_address: Bytes!
+  pid: String! # pool id
+  password: String!
+  hash: String!
+  limit: BigInt!
+  total: BigInt!
+  total_remaining: BigInt!
+  sender: Sender!
+  start_time: BigInt!
+  end_time: BigInt!
+  creation_time: BigInt!
+  token: Token!
+  exchange_amounts: [BigInt!]!
+  exchange_tokens: [Token!]!
 }
