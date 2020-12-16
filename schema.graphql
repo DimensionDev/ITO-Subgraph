@@ -6,9 +6,7 @@ type Pool @entity {
   total: String!
   total_remaining: String!
   claim_remaining: String!
-  sender_address: String!
-  sender_name: String!
-  sender_message: String!
+  sender: Sender!
   chain_id: BigInt!
   start_time: Int!
   end_time: Int!
@@ -16,6 +14,12 @@ type Pool @entity {
   token: Token!
   exchange_amount: [String!]!
   exchange_token: [Token!]!
+}
+
+type Sender @entity {
+  address: String!
+  name: String!
+  message: String!
 }
 
 type Token @entity {
