@@ -6,7 +6,7 @@ dataSources:
     name: ITO
     network: rinkeby
     source:
-      address: "0x52ceb31d6c197b5c039786fbefd6a82df70fdfd6"
+      address: "0xc0a44477c137b9a603eba80ddad219a02a62f0ff"
       abi: ITO
       startBlock: 7698969
     mapping:

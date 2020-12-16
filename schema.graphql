@@ -17,6 +17,7 @@ type Pool @entity {
 }
 
 type Sender @entity {
+  id: ID!
   address: String!
   name: String!
   message: String!
