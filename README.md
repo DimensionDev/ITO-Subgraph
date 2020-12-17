@@ -24,6 +24,10 @@ Cotains data about an ITO pool.
 
 Contains detailed data on a specific token.
 
-### Sender
+### Seller
 
-The creator of specific pool.
+Cotains data about the creator of an ITO pool.
+
+### Buyer
+
+Cotains data about the consumer of an ITO pool.

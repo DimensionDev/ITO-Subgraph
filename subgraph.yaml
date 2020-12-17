@@ -6,9 +6,9 @@ dataSources:
     name: ITO
     network: ropsten
     source:
-      address: "0x9dC7441f8DF2c0479F00DB0df31E5D23361271C8"
+      address: "0x3c4bcbbeba90f1bafcc447163fd0367d4591875c"
       abi: ITO
-      startBlock: 9270332
+      startBlock: 9302545
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

@@ -1,8 +1,13 @@
-type Sender @entity {
+type Seller @entity {
   id: ID!
   address: Bytes!
   name: String!
   message: String!
+}
+
+type Buyer @entity {
+  id: ID!
+  address: Bytes!
 }
 
 type Token @entity {
@@ -15,12 +20,6 @@ type Token @entity {
   chain_id: Int!
 }
 
-type TransactionPoolMap @entity {
-  id: ID!
-  pid: String!
-  creation_time: BigInt!
-}
-
 type Pool @entity {
   id: ID!
   chain_id: Int!
@@ -31,11 +30,27 @@ type Pool @entity {
   limit: BigInt!
   total: BigInt!
   total_remaining: BigInt!
-  sender: Sender!
+  seller: Seller!
   start_time: BigInt!
   end_time: BigInt!
   creation_time: BigInt!
+  last_updated_time: BigInt!
   token: Token!
   exchange_amounts: [BigInt!]!
   exchange_tokens: [Token!]!
+}
+
+type ExchangeInfo @entity {
+  id: ID!
+  pid: String! # pool id
+  buyer: Buyer!
+  buy_amount: BigInt!
+  buy_time: BigInt!
+  buy_token: Token!
+}
+
+type PoolInfo @entity {
+  id: ID!
+  pid: String!
+  creation_time: BigInt!
 }
