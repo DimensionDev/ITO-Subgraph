@@ -69,9 +69,9 @@ export function handleClaimSuccess(event: ClaimSuccess): void {}
 export function handleFillSuccess(event: FillSuccess): void {
   let txHash = event.transaction.hash.toHexString();
 
-  // the event handlers will be triggered before call handlers for same transaction
-  // we stored the necessary pool info into a temp map and create the pool
-  // when call handler was triggered.
+  // the event handlers will be triggered before call handlers in the same transaction
+  // this event handler only stores the necessary pool info into a map
+  // the creation of the pool happens when the call handler was triggered
   let poolMap = new TransactionPoolMap(txHash);
   poolMap.pid = event.params.id.toHexString();
   poolMap.creation_time = event.params.creation_time;

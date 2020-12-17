@@ -2,6 +2,14 @@
 
 This subgraph tracks all of ITO pool create by the ITO contract.
 
+## Setup
+
+```bash
+yarn
+yarn codegen
+yarn build
+```
+
 ## Running Locally
 
 Make sure to update package.json settings to point to your own graph account.

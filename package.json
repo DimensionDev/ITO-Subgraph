@@ -1,13 +1,13 @@
 {
   "name": "ito-subgraph",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ guanbinrui/ito-subgraph",
-    "create-local": "graph create --node http://localhost:8020/ guanbinrui/ito-subgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ guanbinrui/ito-subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 guanbinrui/ito-subgraph"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito",
+    "create-local": "graph create --node http://localhost:8020/ dimensiondev/mask-ito",
+    "remove-local": "graph remove --node http://localhost:8020/ dimensiondev/mask-ito",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 dimensiondev/mask-ito"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.19.0",
