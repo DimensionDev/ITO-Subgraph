@@ -4,7 +4,9 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito",
+    "deploy": "npm run deploy-thegraph-node && npm run deploy-mask-node",
+    "deploy-thegraph-node": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito",
+    "deploy-mask-node": "graph deploy --node https://graph.maskbook.com/json-rpc/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito",
     "create-local": "graph create --node http://localhost:8020/ dimensiondev/mask-ito",
     "remove-local": "graph remove --node http://localhost:8020/ dimensiondev/mask-ito",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 dimensiondev/mask-ito"
