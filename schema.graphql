@@ -40,13 +40,20 @@ type Pool @entity {
   exchange_tokens: [Token!]!
 }
 
-type ExchangeInfo @entity {
+type BuyInfo @entity {
   id: ID!
-  pid: String! # pool id
+  pool: Pool!
   buyer: Buyer!
-  buy_amount: BigInt!
-  buy_time: BigInt!
-  buy_token: Token!
+  token: Token! # the sold token
+  amount: BigInt!
+  timestamp: BigInt!
+}
+
+type SellInfo @entity {
+  id: ID!
+  pool: Pool!
+  seller: Seller!
+  timestamp: BigInt!
 }
 
 type PoolInfo @entity {

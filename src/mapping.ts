@@ -10,11 +10,12 @@ import {
 } from "../generated/ITO/ITO";
 import {
   PoolInfo,
-  ExchangeInfo,
+  BuyInfo,
   Pool,
   Seller,
   Buyer,
   Token,
+  SellInfo,
 } from "../generated/schema";
 
 export function handleFillPool(call: Fill_poolCall): void {
@@ -53,11 +54,12 @@ export function handleFillPool(call: Fill_poolCall): void {
   }
 
   // create pool
-  let pool = new Pool(record.pid);
+  let pool_id = record.pid;
+  let pool = new Pool(pool_id);
   pool.chain_id = CHAIN_ID;
   pool.contract_address = Bytes.fromHexString(CONTRACT_ADDR) as Address;
-  pool.pid = record.pid;
-  pool.password = "PASSWORD INVALID"; // a password was stored locally
+  pool.pid = pool_id;
+  pool.password = "PASSWORD INVALID"; // a password was stored locally and kept by seller
   pool.hash = call.inputs._hash.toHexString();
   pool.limit = call.inputs._limit;
   pool.total = call.inputs._total_tokens;
@@ -71,6 +73,17 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.exchange_amounts = call.inputs._ratios;
   pool.exchange_tokens = exchange_addrs;
   pool.save();
+
+  // create sell info
+  let sellInfoId =
+    BigInt.fromI32(call.block.timestamp.toI32()).toHexString() +
+    "_" +
+    BigInt.fromI32(call.transaction.index.toI32()).toHexString();
+  let sellInfo = new SellInfo(sellInfoId);
+  sellInfo.pool = pool_id;
+  sellInfo.seller = seller.id;
+  sellInfo.timestamp = call.block.timestamp;
+  sellInfo.save();
 }
 
 export function handleClaimSuccess(event: ClaimSuccess): void {
@@ -97,14 +110,18 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
   pool.total_remaining = pool.total_remaining.minus(event.params.claimed_value);
   pool.save();
 
-  // create exchange info
-  let exchangeInfo = new ExchangeInfo(event.transaction.hash.toHexString());
-  exchangeInfo.pid = pid;
-  exchangeInfo.buyer = buyer.id;
-  exchangeInfo.buy_time = event.block.timestamp;
-  exchangeInfo.buy_amount = event.params.claimed_value;
-  exchangeInfo.buy_token = token.id;
-  exchangeInfo.save();
+  // create buy info
+  let buyInfoId =
+    BigInt.fromI32(event.block.timestamp.toI32()).toHexString() +
+    "_" +
+    BigInt.fromI32(event.transaction.index.toI32()).toHexString();
+  let buyInfo = new BuyInfo(buyInfoId);
+  buyInfo.pool = pid;
+  buyInfo.buyer = buyer.id;
+  buyInfo.timestamp = event.block.timestamp;
+  buyInfo.amount = event.params.claimed_value;
+  buyInfo.token = token.id;
+  buyInfo.save();
 }
 
 export function handleFillSuccess(event: FillSuccess): void {
