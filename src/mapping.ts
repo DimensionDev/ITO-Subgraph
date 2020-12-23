@@ -64,12 +64,13 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.limit = call.inputs._limit;
   pool.total = call.inputs._total_tokens;
   pool.total_remaining = call.inputs._total_tokens;
-  pool.seller = seller.id;
   pool.start_time = call.inputs._start.plus(BigInt.fromI32(GENESIS_TIMESTAMP));
   pool.end_time = call.inputs._end.plus(BigInt.fromI32(GENESIS_TIMESTAMP));
   pool.creation_time = record.creation_time;
   pool.last_updated_time = record.creation_time;
   pool.token = token.id;
+  pool.seller = seller.id;
+  pool.buyers = [];
   pool.exchange_amounts = call.inputs._ratios;
   pool.exchange_tokens = exchange_addrs;
   pool.save();
@@ -109,6 +110,9 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
   }
   pool.last_updated_time = event.block.timestamp;
   pool.total_remaining = pool.total_remaining.minus(event.params.claimed_value);
+  if (!pool.buyers.includes(buyer_addr)) {
+    pool.buyers = pool.buyers.concat([buyer.id]);
+  }
   pool.save();
 
   // create buy info

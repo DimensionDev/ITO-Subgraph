@@ -31,12 +31,13 @@ type Pool @entity {
   limit: BigInt!
   total: BigInt!
   total_remaining: BigInt!
-  seller: Seller!
   start_time: BigInt!
   end_time: BigInt!
   creation_time: BigInt!
   last_updated_time: BigInt!
   token: Token!
+  seller: Seller!
+  buyers: [Buyer!]!
   exchange_amounts: [BigInt!]!
   exchange_tokens: [Token!]!
 }
