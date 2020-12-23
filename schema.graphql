@@ -2,12 +2,12 @@ type Seller @entity {
   id: ID!
   address: Bytes!
   name: String!
-  message: String!
 }
 
 type Buyer @entity {
   id: ID!
   address: Bytes!
+  name: String
 }
 
 type Token @entity {
@@ -26,6 +26,7 @@ type Pool @entity {
   contract_address: Bytes!
   pid: String! # pool id
   password: String!
+  message: String!
   hash: String!
   limit: BigInt!
   total: BigInt!

@@ -34,7 +34,6 @@ export function handleFillPool(call: Fill_poolCall): void {
   }
   seller.address = call.from;
   seller.name = call.inputs.name;
-  seller.message = call.inputs.message;
   seller.save();
 
   // create token
@@ -60,6 +59,7 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.contract_address = Bytes.fromHexString(CONTRACT_ADDR) as Address;
   pool.pid = pool_id;
   pool.password = "PASSWORD INVALID"; // a password was stored locally and kept by seller
+  pool.message = call.inputs.message;
   pool.hash = call.inputs._hash.toHexString();
   pool.limit = call.inputs._limit;
   pool.total = call.inputs._total_tokens;
@@ -98,6 +98,7 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
     buyer = new Buyer(buyer_addr);
   }
   buyer.address = event.params.claimer;
+  buyer.name = event.params.claimer.toHexString().slice(0, 6);
   buyer.save();
 
   // update pool
