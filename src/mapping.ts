@@ -159,6 +159,14 @@ export function handleFillSuccess(event: FillSuccess): void {
   poolMap.save();
 }
 
-export function handleRefundSuccess(event: RefundSuccess): void {}
+export function handleRefundSuccess(event: RefundSuccess): void {
+  let pid = event.params.id.toHexString();
+  let pool = Pool.load(pid);
+  if (pool == null) {
+    return;
+  }
+  pool.total_remaining = BigInt.fromI32(0);
+  pool.save();
+}
 
 export function handleTest(event: Test): void {}
