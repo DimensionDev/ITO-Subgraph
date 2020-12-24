@@ -70,8 +70,12 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.limit = call.inputs._limit;
   pool.total = call.inputs._total_tokens;
   pool.total_remaining = call.inputs._total_tokens;
-  pool.start_time = call.inputs._start.plus(BigInt.fromI32(GENESIS_TIMESTAMP));
-  pool.end_time = call.inputs._end.plus(BigInt.fromI32(GENESIS_TIMESTAMP));
+  pool.start_time = call.inputs._start
+    .plus(BigInt.fromI32(GENESIS_TIMESTAMP))
+    .toI32();
+  pool.end_time = call.inputs._end
+    .plus(BigInt.fromI32(GENESIS_TIMESTAMP))
+    .toI32();
   pool.creation_time = record.creation_time;
   pool.last_updated_time = record.creation_time;
   pool.token = token.id;
@@ -90,7 +94,7 @@ export function handleFillPool(call: Fill_poolCall): void {
   let sellInfo = new SellInfo(sellInfoId);
   sellInfo.pool = pool_id;
   sellInfo.seller = seller.id;
-  sellInfo.timestamp = call.block.timestamp;
+  sellInfo.timestamp = call.block.timestamp.toI32();
   sellInfo.save();
 }
 
@@ -120,7 +124,7 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
   let buyInfo = new BuyInfo(buyInfoId);
   buyInfo.pool = pid;
   buyInfo.buyer = buyer.id;
-  buyInfo.timestamp = event.block.timestamp;
+  buyInfo.timestamp = event.block.timestamp.toI32();
   buyInfo.amount = event.params.claimed_value;
   buyInfo.token = token.id;
   buyInfo.save();
@@ -130,7 +134,7 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
   if (pool == null) {
     return;
   }
-  pool.last_updated_time = event.block.timestamp;
+  pool.last_updated_time = event.block.timestamp.toI32();
   pool.total_remaining = pool.total_remaining.minus(event.params.claimed_value);
   if (!pool.buyers.includes(buyer_addr)) {
     pool.buyers = pool.buyers.concat([buyer.id]);
@@ -155,7 +159,7 @@ export function handleFillSuccess(event: FillSuccess): void {
   // the creation of the pool happens when the call handler was triggered
   let poolMap = new PoolInfo(txHash);
   poolMap.pid = event.params.id.toHexString();
-  poolMap.creation_time = event.params.creation_time;
+  poolMap.creation_time = event.params.creation_time.toI32();
   poolMap.save();
 }
 

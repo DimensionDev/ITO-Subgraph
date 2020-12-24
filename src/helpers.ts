@@ -80,9 +80,9 @@ export function fetchTokenName(tokenAddress: Address): string {
   return nameValue;
 }
 
-export function fetchTokenDecimals(tokenAddress: Address): BigInt {
+export function fetchTokenDecimals(tokenAddress: Address): i32 {
   if (isNullEthValue(tokenAddress.toHexString())) {
-    return BigInt.fromI32(18);
+    return 18;
   }
   let contract = ERC20.bind(tokenAddress);
   // try types uint8 for decimals
@@ -91,5 +91,5 @@ export function fetchTokenDecimals(tokenAddress: Address): BigInt {
   if (!decimalResult.reverted) {
     decimalValue = decimalResult.value;
   }
-  return BigInt.fromI32(decimalValue);
+  return decimalValue;
 }

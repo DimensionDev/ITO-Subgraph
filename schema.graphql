@@ -16,7 +16,7 @@ type Token @entity {
   address: Bytes!
   name: String
   symbol: String
-  decimals: BigInt!
+  decimals: Int!
   chain_id: Int!
 }
 
@@ -31,10 +31,10 @@ type Pool @entity {
   limit: BigInt!
   total: BigInt!
   total_remaining: BigInt!
-  start_time: BigInt!
-  end_time: BigInt!
-  creation_time: BigInt!
-  last_updated_time: BigInt!
+  start_time: Int!
+  end_time: Int!
+  creation_time: Int!
+  last_updated_time: Int!
   token: Token!
   seller: Seller!
   buyers: [Buyer!]!
@@ -49,18 +49,18 @@ type BuyInfo @entity {
   buyer: Buyer!
   token: Token! # the sold token
   amount: BigInt!
-  timestamp: BigInt!
+  timestamp: Int!
 }
 
 type SellInfo @entity {
   id: ID!
   pool: Pool!
   seller: Seller!
-  timestamp: BigInt!
+  timestamp: Int!
 }
 
 type PoolInfo @entity {
   id: ID!
   pid: String!
-  creation_time: BigInt!
+  creation_time: Int!
 }
