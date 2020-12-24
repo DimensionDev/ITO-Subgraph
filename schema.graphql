@@ -39,6 +39,7 @@ type Pool @entity {
   seller: Seller!
   buyers: [Buyer!]!
   exchange_amounts: [BigInt!]!
+  exchange_volumes: [BigInt!]!
   exchange_tokens: [Token!]!
 }
 

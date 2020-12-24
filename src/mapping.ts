@@ -52,6 +52,12 @@ export function handleFillPool(call: Fill_poolCall): void {
     exchange_addrs[i] = token_addr_.toHexString();
   }
 
+  // create exchange volumes
+  let exchange_volumes = new Array<BigInt>(addrs.length);
+  for (let i = 0; i < addrs.length; i += 1) {
+    exchange_volumes[i] = BigInt.fromI32(0);
+  }
+
   // create pool
   let pool_id = record.pid;
   let pool = new Pool(pool_id);
@@ -72,6 +78,7 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.seller = seller.id;
   pool.buyers = [];
   pool.exchange_amounts = call.inputs._ratios;
+  pool.exchange_volumes = exchange_volumes;
   pool.exchange_tokens = exchange_addrs;
   pool.save();
 
@@ -88,6 +95,9 @@ export function handleFillPool(call: Fill_poolCall): void {
 }
 
 export function handleClaimSuccess(event: ClaimSuccess): void {
+  // the pool id
+  let pid = event.params.id.toHexString();
+
   // create token
   let token = fetchToken(event.params.token_address);
   token.save();
@@ -102,19 +112,6 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
   buyer.name = event.params.claimer.toHexString().slice(0, 6);
   buyer.save();
 
-  // update pool
-  let pid = event.params.id.toHexString();
-  let pool = Pool.load(pid);
-  if (pool == null) {
-    return;
-  }
-  pool.last_updated_time = event.block.timestamp;
-  pool.total_remaining = pool.total_remaining.minus(event.params.claimed_value);
-  if (!pool.buyers.includes(buyer_addr)) {
-    pool.buyers = pool.buyers.concat([buyer.id]);
-  }
-  pool.save();
-
   // create buy info
   let buyInfoId =
     BigInt.fromI32(event.block.timestamp.toI32()).toHexString() +
@@ -127,6 +124,27 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
   buyInfo.amount = event.params.claimed_value;
   buyInfo.token = token.id;
   buyInfo.save();
+
+  // update pool
+  let pool = Pool.load(pid);
+  if (pool == null) {
+    return;
+  }
+  pool.last_updated_time = event.block.timestamp;
+  pool.total_remaining = pool.total_remaining.minus(event.params.claimed_value);
+  if (!pool.buyers.includes(buyer_addr)) {
+    pool.buyers = pool.buyers.concat([buyer.id]);
+  }
+  let exchange_volumes = pool.exchange_volumes;
+  let exchange_tokens = pool.exchange_tokens;
+  for (let i = 0; i < exchange_tokens.length; i += 1) {
+    if (exchange_tokens[i] == token.address.toHexString()) {
+      exchange_volumes[i] = exchange_volumes[i].plus(buyInfo.amount);
+      break;
+    }
+  }
+  pool.exchange_volumes = exchange_volumes;
+  pool.save();
 }
 
 export function handleFillSuccess(event: FillSuccess): void {
