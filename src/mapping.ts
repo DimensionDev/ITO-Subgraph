@@ -20,11 +20,11 @@ import {
 
 export function handleFillPool(call: Fill_poolCall): void {
   let txHash = call.transaction.hash.toHexString();
-  let record = PoolInfo.load(txHash);
+  let pool_info = PoolInfo.load(txHash);
 
   // the event handler will be called before call handler
   // if a map record cannot be found than we skip the call
-  if (!record) return;
+  if (!pool_info) return;
 
   // create seller
   let seller_addr = call.from.toHexString();
@@ -59,7 +59,7 @@ export function handleFillPool(call: Fill_poolCall): void {
   }
 
   // create pool
-  let pool_id = record.pid;
+  let pool_id = pool_info.pid;
   let pool = new Pool(pool_id);
   pool.chain_id = CHAIN_ID;
   pool.contract_address = Bytes.fromHexString(CONTRACT_ADDR) as Address;
@@ -76,8 +76,8 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.end_time = call.inputs._end
     .plus(BigInt.fromI32(GENESIS_TIMESTAMP))
     .toI32();
-  pool.creation_time = record.creation_time;
-  pool.last_updated_time = record.creation_time;
+  pool.creation_time = pool_info.creation_time;
+  pool.last_updated_time = pool_info.creation_time;
   pool.token = token.id;
   pool.seller = seller.id;
   pool.buyers = [];
