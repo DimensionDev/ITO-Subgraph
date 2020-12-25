@@ -1,14 +1,18 @@
-import { BigInt, Address } from "@graphprotocol/graph-ts";
+import { BigInt, Address, log } from "@graphprotocol/graph-ts";
 import { CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20 } from "./constants";
 import { ERC20 } from "../generated/ITO/ERC20";
 import { ERC20NameBytes } from "../generated/ITO/ERC20NameBytes";
 import { ERC20SymbolBytes } from "../generated/ITO/ERC20SymbolBytes";
 import { Token } from "../generated/schema";
 
+export function isEth(value: string): boolean {
+  return value == "0x0000000000000000000000000000000000000000";
+}
+
 export function isNullEthValue(value: string): boolean {
   return (
     value ==
-    "0x0000000000000000000000000000000000000000000000000000000000000000"
+    "0x0000000000000000000000000000000000000000000000000000000000000001"
   );
 }
 
@@ -17,7 +21,7 @@ export function fetchToken(tokenAddress: Address): Token {
   if (token == null) {
     token = new Token(tokenAddress.toHexString());
   }
-  token.type = isNullEthValue(tokenAddress.toHex())
+  token.type = isEth(tokenAddress.toHex())
     ? TOKEN_TYPE_ETHER
     : TOKEN_TYPE_ERC20;
   token.chain_id = CHAIN_ID;
@@ -29,7 +33,7 @@ export function fetchToken(tokenAddress: Address): Token {
 }
 
 export function fetchTokenSymbol(tokenAddress: Address): string {
-  if (isNullEthValue(tokenAddress.toHexString())) {
+  if (isEth(tokenAddress.toHexString())) {
     return "ETH";
   }
 
@@ -55,7 +59,7 @@ export function fetchTokenSymbol(tokenAddress: Address): string {
 }
 
 export function fetchTokenName(tokenAddress: Address): string {
-  if (isNullEthValue(tokenAddress.toHexString())) {
+  if (isEth(tokenAddress.toHexString())) {
     return "Ether";
   }
 
@@ -81,7 +85,7 @@ export function fetchTokenName(tokenAddress: Address): string {
 }
 
 export function fetchTokenDecimals(tokenAddress: Address): i32 {
-  if (isNullEthValue(tokenAddress.toHexString())) {
+  if (isEth(tokenAddress.toHexString())) {
     return 18;
   }
   let contract = ERC20.bind(tokenAddress);
