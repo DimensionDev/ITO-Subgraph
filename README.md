@@ -1,6 +1,6 @@
 # ITO Subgraph
 
-This subgraph tracks all of ITO pool create by the ITO contract.
+This subgraph tracks all of ITO pools create by the ITO contract.
 
 ## Setup
 
