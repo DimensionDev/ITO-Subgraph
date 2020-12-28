@@ -1,4 +1,4 @@
-import { Address, Bytes, BigInt } from "@graphprotocol/graph-ts";
+import { Address, Bytes, BigInt, log } from "@graphprotocol/graph-ts";
 import { fetchToken } from "./helpers";
 import { CHAIN_ID, CONTRACT_ADDR, GENESIS_TIMESTAMP } from "./constants";
 import {
@@ -142,6 +142,11 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
   let exchange_volumes = pool.exchange_volumes;
   let exchange_tokens = pool.exchange_tokens;
   for (let i = 0; i < exchange_tokens.length; i += 1) {
+    log.info("Compare {} with {}", [
+      exchange_tokens[i],
+      token.address.toHexString(),
+    ]);
+
     if (exchange_tokens[i] == token.address.toHexString()) {
       exchange_volumes[i] = exchange_volumes[i].plus(buyInfo.amount);
       break;
