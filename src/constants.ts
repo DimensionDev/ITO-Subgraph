@@ -1,5 +1,5 @@
 export const CHAIN_ID = 3;
-export const CONTRACT_ADDR = "0x3c4bcbbeba90f1bafcc447163fd0367d4591875c";
+export const CONTRACT_ADDR = "0xae86282d458ed6583591619a9f46a6916ee27df1";
 
 export const GENESIS_TIMESTAMP = 1606780800; // UNIX timestamp
 

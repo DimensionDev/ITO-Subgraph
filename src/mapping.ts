@@ -2,11 +2,11 @@ import { Address, Bytes, BigInt, log } from "@graphprotocol/graph-ts";
 import { fetchToken } from "./helpers";
 import { CHAIN_ID, CONTRACT_ADDR, GENESIS_TIMESTAMP } from "./constants";
 import {
-  ClaimSuccess,
   FillSuccess,
-  RefundSuccess,
-  Test,
+  DestructSuccess,
   Fill_poolCall,
+  SwapCall,
+  SwapSuccess,
 } from "../generated/ITO/ITO";
 import {
   PoolInfo,
@@ -53,18 +53,20 @@ export function handleFillPool(call: Fill_poolCall): void {
   }
 
   // create exchange volumes
-  let exchange_volumes = new Array<BigInt>(addrs.length);
+  let exchange_in_volumes = new Array<BigInt>(addrs.length);
+  let exchange_out_volumes = new Array<BigInt>(addrs.length);
   for (let i = 0; i < addrs.length; i += 1) {
-    exchange_volumes[i] = BigInt.fromI32(0);
+    exchange_in_volumes[i] = BigInt.fromI32(0);
+    exchange_out_volumes[i] = BigInt.fromI32(0);
   }
 
   // create pool
   let pool_id = pool_info.pid;
   let pool = new Pool(pool_id);
   pool.chain_id = CHAIN_ID;
-  pool.contract_address = Bytes.fromHexString(CONTRACT_ADDR) as Address;
+  pool.contract_address = Address.fromHexString(CONTRACT_ADDR) as Address;
   pool.pid = pool_id;
-  pool.password = "PASSWORD INVALID"; // a password was stored locally and kept by seller
+  pool.password = ""; // a password was stored locally and kept by seller
   pool.message = call.inputs.message;
   pool.hash = call.inputs._hash.toHexString();
   pool.limit = call.inputs._limit;
@@ -82,7 +84,8 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.seller = seller.id;
   pool.buyers = [];
   pool.exchange_amounts = call.inputs._ratios;
-  pool.exchange_volumes = exchange_volumes;
+  pool.exchange_in_volumes = exchange_in_volumes;
+  pool.exchange_out_volumes = exchange_out_volumes;
   pool.exchange_tokens = exchange_addrs;
   pool.save();
 
@@ -98,22 +101,24 @@ export function handleFillPool(call: Fill_poolCall): void {
   sellInfo.save();
 }
 
-export function handleClaimSuccess(event: ClaimSuccess): void {
+export function handleSwapPool(call: SwapCall): void { }
+
+export function handleSwapSuccess(event: SwapSuccess): void {
   // the pool id
-  let pid = event.params.id.toHexString();
+  let pool_id = event.params.id.toHexString();
 
   // create token
-  let token = fetchToken(event.params.token_address);
+  let token = fetchToken(event.params.from_address);
   token.save();
 
   // create buyer
-  let buyer_addr = event.params.claimer.toHexString();
+  let buyer_addr = event.params.swapper.toHexString();
   let buyer = Buyer.load(buyer_addr);
   if (buyer == null) {
     buyer = new Buyer(buyer_addr);
   }
-  buyer.address = event.params.claimer;
-  buyer.name = event.params.claimer.toHexString().slice(0, 6);
+  buyer.address = event.params.swapper;
+  buyer.name = event.params.swapper.toHexString();
   buyer.save();
 
   // create buy info
@@ -122,37 +127,40 @@ export function handleClaimSuccess(event: ClaimSuccess): void {
     "_" +
     BigInt.fromI32(event.transaction.index.toI32()).toHexString();
   let buyInfo = new BuyInfo(buyInfoId);
-  buyInfo.pool = pid;
+  buyInfo.pool = pool_id;
   buyInfo.buyer = buyer.id;
   buyInfo.timestamp = event.block.timestamp.toI32();
-  buyInfo.amount = event.params.claimed_value;
+  buyInfo.amount_sold = event.params.from_value;
+  buyInfo.amount_bought = event.params.to_value;
   buyInfo.token = token.id;
   buyInfo.save();
 
   // update pool
-  let pool = Pool.load(pid);
+  let pool = Pool.load(pool_id);
   if (pool == null) {
     return;
   }
   pool.last_updated_time = event.block.timestamp.toI32();
-  pool.total_remaining = pool.total_remaining.minus(event.params.claimed_value);
+  pool.total_remaining = pool.total_remaining.minus(event.params.to_value);
   if (!pool.buyers.includes(buyer_addr)) {
     pool.buyers = pool.buyers.concat([buyer.id]);
   }
-  let exchange_volumes = pool.exchange_volumes;
+  let exchange_in_volumes = pool.exchange_in_volumes;
+  let exchange_out_volumes = pool.exchange_out_volumes;
   let exchange_tokens = pool.exchange_tokens;
   for (let i = 0; i < exchange_tokens.length; i += 1) {
-    log.info("Compare {} with {}", [
-      exchange_tokens[i],
-      token.address.toHexString(),
-    ]);
-
     if (exchange_tokens[i] == token.address.toHexString()) {
-      exchange_volumes[i] = exchange_volumes[i].plus(buyInfo.amount);
+      exchange_in_volumes[i] = exchange_in_volumes[i].plus(
+        event.params.from_value
+      );
+      exchange_out_volumes[i] = exchange_out_volumes[i].plus(
+        event.params.to_value
+      );
       break;
     }
   }
-  pool.exchange_volumes = exchange_volumes;
+  pool.exchange_in_volumes = exchange_in_volumes;
+  pool.exchange_out_volumes = exchange_out_volumes;
   pool.save();
 }
 
@@ -168,7 +176,7 @@ export function handleFillSuccess(event: FillSuccess): void {
   poolMap.save();
 }
 
-export function handleRefundSuccess(event: RefundSuccess): void {
+export function handleDestructSuccess(event: DestructSuccess): void {
   let pid = event.params.id.toHexString();
   let pool = Pool.load(pid);
   if (pool == null) {
@@ -177,5 +185,3 @@ export function handleRefundSuccess(event: RefundSuccess): void {
   pool.total_remaining = BigInt.fromI32(0);
   pool.save();
 }
-
-export function handleTest(event: Test): void {}

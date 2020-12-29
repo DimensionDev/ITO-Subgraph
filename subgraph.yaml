@@ -6,15 +6,15 @@ dataSources:
     name: ITO
     network: ropsten
     source:
-      address: "0xc868ff6eB45D91D8b01a2b10aa0A694aAe1F0296"
+      address: "0xae86282d458ed6583591619a9f46a6916ee27df1"
       abi: ITO
-      startBlock: 9341259
+      startBlock: 9402272
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - ClaimSuccess
+        - SwapSuccess
         - FillSuccess
         - RefundSuccess
         - Test
@@ -30,13 +30,13 @@ dataSources:
       callHandlers:
         - function: fill_pool(bytes32,uint256,uint256,string,string,address[],uint256[],address,uint256,uint256)
           handler: handleFillPool
+        - function: swap(bytes32,bytes32,address,bytes32,uint256,uint256)
+          handler: handleSwapPool          
       eventHandlers:
-        - event: ClaimSuccess(bytes32,address,uint256,address)
-          handler: handleClaimSuccess
+        - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
+          handler: handleSwapSuccess
         - event: FillSuccess(uint256,bytes32,address,uint256,address,string,string)
           handler: handleFillSuccess
-        - event: RefundSuccess(bytes32,address,uint256)
-          handler: handleRefundSuccess
-        - event: Test(uint256)
-          handler: handleTest
+        - event: DestructSuccess(bytes32,address,uint256,uint256[])
+          handler: handleDestructSuccess
       file: ./src/mapping.ts

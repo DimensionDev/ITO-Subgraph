@@ -39,8 +39,9 @@ type Pool @entity {
   seller: Seller!
   buyers: [Buyer!]!
   exchange_amounts: [BigInt!]!
-  exchange_volumes: [BigInt!]!
   exchange_tokens: [Token!]!
+  exchange_in_volumes: [BigInt!]!
+  exchange_out_volumes: [BigInt!]!
 }
 
 type BuyInfo @entity {
@@ -48,7 +49,8 @@ type BuyInfo @entity {
   pool: Pool!
   buyer: Buyer!
   token: Token! # the sold token
-  amount: BigInt!
+  amount_sold: BigInt!
+  amount_bought: BigInt!
   timestamp: Int!
 }
 
