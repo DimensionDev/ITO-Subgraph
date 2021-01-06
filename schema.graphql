@@ -48,7 +48,7 @@ type BuyInfo @entity {
   id: ID!
   pool: Pool!
   buyer: Buyer!
-  token: Token! # the sold token
+  token: Token! # the sold token of buyer
   amount_sold: BigInt!
   amount_bought: BigInt!
   timestamp: Int!
@@ -58,6 +58,17 @@ type SellInfo @entity {
   id: ID!
   pool: Pool!
   seller: Seller!
+  token: Token! # the sold token of seller
+  amount: BigInt!
+  timestamp: Int!
+}
+
+type DestructInfo @entity {
+  id: ID!
+  pool: Pool!
+  seller: Seller!
+  token: Token! # the sold token of seller
+  amount: BigInt!
   timestamp: Int!
 }
 

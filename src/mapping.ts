@@ -11,6 +11,7 @@ import {
 import {
   PoolInfo,
   BuyInfo,
+  DestructInfo,
   Pool,
   Seller,
   Buyer,
@@ -97,6 +98,7 @@ export function handleFillPool(call: Fill_poolCall): void {
   let sellInfo = new SellInfo(sellInfoId);
   sellInfo.pool = pool_id;
   sellInfo.seller = seller.id;
+  sellInfo.amount = BigInt.fromI32(0)
   sellInfo.timestamp = call.block.timestamp.toI32();
   sellInfo.save();
 }
@@ -137,9 +139,7 @@ export function handleSwapSuccess(event: SwapSuccess): void {
 
   // update pool
   let pool = Pool.load(pool_id);
-  if (pool == null) {
-    return;
-  }
+  if (pool == null) return;
   pool.last_updated_time = event.block.timestamp.toI32();
   pool.total_remaining = pool.total_remaining.minus(event.params.to_value);
   if (!pool.buyers.includes(buyer_addr)) {
@@ -179,9 +179,30 @@ export function handleFillSuccess(event: FillSuccess): void {
 export function handleDestructSuccess(event: DestructSuccess): void {
   let pid = event.params.id.toHexString();
   let pool = Pool.load(pid);
-  if (pool == null) {
-    return;
-  }
+  if (pool == null) return;
   pool.total_remaining = BigInt.fromI32(0);
   pool.save();
+
+  // create token info
+  let token_addr = event.params.token_address.toHexString();
+  let token = Token.load(token_addr)
+  if (token == null) return;
+
+  // create seller info
+  let seller_addr = event.transaction.from.toHexString();
+  let seller = Seller.load(seller_addr);
+  if (seller == null) return;
+
+  // create destruct info
+  let destructInfoId =
+    BigInt.fromI32(event.block.timestamp.toI32()).toHexString() +
+    "_" +
+    BigInt.fromI32(event.transaction.index.toI32()).toHexString();
+  let destructInfo = new DestructInfo(destructInfoId);
+  destructInfo.pool = pool.id
+  destructInfo.seller = seller.id
+  destructInfo.token = token.id
+  destructInfo.amount = event.params.remaining_balance
+  destructInfo.timestamp = event.block.timestamp.toI32();
+  destructInfo.save()
 }
