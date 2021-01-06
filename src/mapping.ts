@@ -98,8 +98,9 @@ export function handleFillPool(call: Fill_poolCall): void {
   let sellInfo = new SellInfo(sellInfoId);
   sellInfo.pool = pool_id;
   sellInfo.seller = seller.id;
-  sellInfo.amount = BigInt.fromI32(0)
+  sellInfo.amount = call.inputs._total_tokens
   sellInfo.timestamp = call.block.timestamp.toI32();
+  sellInfo.token = token.id
   sellInfo.save();
 }
 
