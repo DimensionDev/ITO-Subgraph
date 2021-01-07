@@ -104,7 +104,17 @@ export function handleFillPool(call: Fill_poolCall): void {
   sellInfo.save();
 }
 
-export function handleSwapPool(call: SwapCall): void { }
+export function handleSwapPool(call: SwapCall): void {
+  // update buy info
+  let buyInfoId =
+    BigInt.fromI32(call.block.timestamp.toI32()).toHexString() +
+    "_" +
+    BigInt.fromI32(call.transaction.index.toI32()).toHexString();
+  let buyInfo = new BuyInfo(buyInfoId);
+  if (!buyInfo) return;
+  buyInfo.amount = call.inputs.input_total;
+  buyInfo.save();
+}
 
 export function handleSwapSuccess(event: SwapSuccess): void {
   // the pool id
@@ -133,6 +143,8 @@ export function handleSwapSuccess(event: SwapSuccess): void {
   buyInfo.pool = pool_id;
   buyInfo.buyer = buyer.id;
   buyInfo.timestamp = event.block.timestamp.toI32();
+  // the amount will be updated in handleSwapPool
+  buyInfo.amount = BigInt.fromI32(0)
   buyInfo.amount_sold = event.params.from_value;
   buyInfo.amount_bought = event.params.to_value;
   buyInfo.token = token.id;

@@ -49,6 +49,7 @@ type BuyInfo @entity {
   pool: Pool!
   buyer: Buyer!
   token: Token! # the sold token of buyer
+  amount: BigInt!
   amount_sold: BigInt!
   amount_bought: BigInt!
   timestamp: Int!
