@@ -66,6 +66,7 @@ export function handleFillPool(call: Fill_poolCall): void {
   let pool = new Pool(pool_id);
   pool.chain_id = CHAIN_ID;
   pool.contract_address = Address.fromHexString(CONTRACT_ADDR) as Address;
+  pool.qualification_address = call.inputs._qualification
   pool.pid = pool_id;
   pool.password = ""; // a password was stored locally and kept by seller
   pool.message = call.inputs.message;

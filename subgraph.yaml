@@ -28,7 +28,7 @@ dataSources:
         - name: ERC20NameBytes
           file: ./abis/ERC20NameBytes.json
       callHandlers:
-        - function: fill_pool(bytes32,uint256,uint256,string,string,address[],uint256[],address,uint256,uint256)
+        - function: fill_pool(bytes32,uint256,uint256,string,string,address[],uint256[],address,uint256,uint256,address)
           handler: handleFillPool
         - function: swap(bytes32,bytes32,address,bytes32,uint256,uint256)
           handler: handleSwapPool          
