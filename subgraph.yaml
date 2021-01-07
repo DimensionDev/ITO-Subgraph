@@ -6,7 +6,7 @@ dataSources:
     name: ITO
     network: ropsten
     source:
-      address: "0x0c2Fb8166419c6A81aA41e53515c0fcB676D1686"
+      address: "0xF4C36D2a5C991E323d32F7d8D7EFe27cE71FfbaB"
       abi: ITO
       startBlock: 9413848
     mapping:
