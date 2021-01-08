@@ -2,9 +2,12 @@
   "name": "ito-subgraph",
   "license": "MIT",
   "scripts": {
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:ropsten": "mustache config/ropsten.json subgraph.template.yaml > subgraph.yaml",
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito",
+    "deploy-thegraph-mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito-mainnet",
+    "deploy-thegraph-ropsten": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito-mainnet",
     "deploy-mask-node": "graph deploy --node https://graph.maskbook.com/json-rpc/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito",
     "create-local": "graph create --node http://localhost:8020/ dimensiondev/mask-ito",
     "remove-local": "graph remove --node http://localhost:8020/ dimensiondev/mask-ito",
@@ -12,7 +15,8 @@
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.19.0",
-    "@graphprotocol/graph-ts": "0.19.0"
+    "@graphprotocol/graph-ts": "0.19.0",
+    "mustache": "^4.1.0"
   },
   "devDependencies": {
     "typescript": "^4.1.3"

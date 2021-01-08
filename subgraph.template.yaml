@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ITO
-    network: ropsten
+    network: {{network}}
     source:
-      address: "0xF4C36D2a5C991E323d32F7d8D7EFe27cE71FfbaB"
+      address: "{{address}}"
       abi: ITO
-      startBlock: 9413848
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -17,7 +17,7 @@ dataSources:
         - SwapSuccess
         - FillSuccess
         - RefundSuccess
-        - Test
+        - WithdrawSuccess
       abis:
         - name: ITO
           file: ./abis/ITO.json
@@ -28,15 +28,15 @@ dataSources:
         - name: ERC20NameBytes
           file: ./abis/ERC20NameBytes.json
       callHandlers:
-        - function: fill_pool(bytes32,uint256,uint256,string,string,address[],uint256[],address,uint256,uint256,address)
+        - function: fill_pool(bytes32,uint256,uint256,string,string,address[],uint128[],address,uint256,uint256,address)
           handler: handleFillPool
-        - function: swap(bytes32,bytes32,address,bytes32,uint256,uint256)
-          handler: handleSwapPool          
+        - function: swap(bytes32,bytes32,address,bytes32,uint256,uint128)
+          handler: handleSwapPool
       eventHandlers:
         - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
           handler: handleSwapSuccess
         - event: FillSuccess(uint256,bytes32,address,uint256,address,string,string)
           handler: handleFillSuccess
-        - event: DestructSuccess(bytes32,address,uint256,uint256[])
+        - event: DestructSuccess(bytes32,address,uint256,uint128[])
           handler: handleDestructSuccess
       file: ./src/mapping.ts

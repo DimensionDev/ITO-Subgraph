@@ -31,6 +31,13 @@ jobs:
             ${{ matrix.os }}-yarn-
 
       - run: yarn
+
+      - run: yarn prepare:mainnet
       - run: yarn codegen
       - run: yarn build
-      - run: yarn deploy --access-token ${{ secrets.ACCESS_TOKEN }}
+      - run: yarn deploy-thegraph-mainnet --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
+
+      - run: yarn prepare:ropsten
+      - run: yarn codegen
+      - run: yarn build
+      - run: yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}
