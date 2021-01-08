@@ -1,5 +1,6 @@
 {
     "network": "mainnet",
     "address": "0xaaea10a15129c9f064685b4185ec2a0d69e34957",
+    "chainId": 1,
     "startBlock": 11612486
   }

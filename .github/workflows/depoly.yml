@@ -32,12 +32,14 @@ jobs:
 
       - run: yarn
 
-      - run: yarn prepare:mainnet
+      - run: yarn prepare-subgraph:mainnet
+      - run: yarn prepare-constants:mainnet
       - run: yarn codegen
       - run: yarn build
       - run: yarn deploy-thegraph-mainnet --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
 
-      - run: yarn prepare:ropsten
+      - run: yarn prepare-subgraph:ropsten
+      - run: yarn prepare-constants:ropsten
       - run: yarn codegen
       - run: yarn build
       - run: yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}
