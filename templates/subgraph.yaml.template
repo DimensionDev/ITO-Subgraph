@@ -2,8 +2,9 @@ specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
+{{#contracts}}
   - kind: ethereum/contract
-    name: ITO
+    name: {{name}}
     network: {{network}}
     source:
       address: "{{address}}"
@@ -40,3 +41,4 @@ dataSources:
         - event: DestructSuccess(bytes32,address,uint256,uint128[])
           handler: handleDestructSuccess
       file: ./src/mapping.ts
+{{/contracts}}
