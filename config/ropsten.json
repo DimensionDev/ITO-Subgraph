@@ -1,7 +1,7 @@
 {
   "chainId": 3,
   "network": "ropsten",
-  "mask_to": "0xab7b1be4233a04e5c43a810e75657eced8e5463b",
+  "mask_to": "0x677f7BbA13108649ECFF068E8B3d55631327B83a",
   "contracts": [
     {
       "name": "ITO",
@@ -10,7 +10,7 @@
     },
     {
       "name": "ITO_Mask",
-      "address": "0xab7b1be4233a04e5c43a810e75657eced8e5463b",
+      "address": "0x677f7BbA13108649ECFF068E8B3d55631327B83a",
       "startBlock": 9706103
     }
   ]
