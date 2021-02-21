@@ -17,7 +17,7 @@ export function isNullEthValue(value: string): boolean {
 }
 
 export function isMask(address: Address): boolean {
-  return address.toHexString() == MASK_TO
+  return address == Address.fromHexString(MASK_TO)
 }
 
 export function fetchToken(tokenAddress: Address): Token {
