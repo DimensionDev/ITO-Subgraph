@@ -1,6 +1,7 @@
 {
   "chainId": 1,
   "network": "mainnet",
+  "mask_to": "0x0000000000000000000000000000000000000000",
   "contracts": [
     {
       "name": "ITO",
