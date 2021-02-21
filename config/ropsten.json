@@ -6,12 +6,12 @@
     {
       "name": "ITO",
       "address": "0xDF0e910DcC73bdC8f4c332A4C12545928683221f",
-      "startBlock": 9475308
+      "startBlock": 9464133
     },
     {
       "name": "ITO_Mask",
       "address": "0x677f7BbA13108649ECFF068E8B3d55631327B83a",
-      "startBlock": 9706103
+      "startBlock": 9707727
     }
   ]
 }

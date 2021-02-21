@@ -1,17 +1,22 @@
 {
   "chainId": 1,
   "network": "mainnet",
-  "mask_to": "0x0000000000000000000000000000000000000000",
+  "mask_to": "0x86812da3A623ab9606976078588b80C315E55FA3",
   "contracts": [
     {
       "name": "ITO",
-      "address": "0xaaea10a15129c9f064685b4185ec2a0d69e34957",
+      "address": "0xAaea10A15129c9f064685b4185EC2a0d69E34957",
       "startBlock": 11612486
     },
     {
       "name": "ITO_V2",
       "address": "0x7aEa34bE68171c6898164f3986Db03964CCa49B7",
       "startBlock": 11664373
+    },
+    {
+      "name": "ITO_Mask",
+      "address": "0x86812da3A623ab9606976078588b80C315E55FA3",
+      "startBlock": 11902991
     }
   ]
 }
