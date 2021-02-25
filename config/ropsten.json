@@ -14,6 +14,12 @@
       "address": "0x677f7BbA13108649ECFF068E8B3d55631327B83a",
       "startBlock": 9707727,
       "is_mask": true
+    },
+    {
+      "name": "ITO_Mask_V2",
+      "address": "0xe0Cf2512237dFdE445eCDaFABffF98DB3AaCac76",
+      "startBlock":	9728631,
+      "is_mask": true
     }
   ]
 }
