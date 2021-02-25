@@ -1,5 +1,5 @@
-import { BigInt, Address, log } from "@graphprotocol/graph-ts";
-import { MASK_TO, CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20 } from "./constants";
+import { Address } from "@graphprotocol/graph-ts";
+import { MASK_CONTRACT_ADDRESS_LIST, CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20 } from "./constants";
 import { ERC20 } from "../generated/ITO/ERC20";
 import { ERC20NameBytes } from "../generated/ITO/ERC20NameBytes";
 import { ERC20SymbolBytes } from "../generated/ITO/ERC20SymbolBytes";
@@ -17,7 +17,13 @@ export function isNullEthValue(value: string): boolean {
 }
 
 export function isMask(address: Address): boolean {
-  return address == Address.fromHexString(MASK_TO)
+  for (let i = 0; i < MASK_CONTRACT_ADDRESS_LIST.length; i += 1) {
+    // skip placeholder
+    if (MASK_CONTRACT_ADDRESS_LIST[i] == "0x0") continue
+    let address_ = Address.fromHexString(MASK_CONTRACT_ADDRESS_LIST[i])
+    if (address == address_) return true
+  }
+  return false
 }
 
 export function fetchToken(tokenAddress: Address): Token {
