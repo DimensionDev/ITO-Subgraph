@@ -31,7 +31,7 @@ dataSources:
       callHandlers:
         - function: fill_pool(bytes32,uint256,uint256,bytes32[],address[],uint128[],uint256,address,uint256,uint256,address)
           handler: handleFillPool
-        - function: swap(bytes32,bytes32,address,bytes32,uint256,uint128)
+        - function: swap(bytes32,bytes32,bytes32,uint256,uint128)
           handler: handleSwapPool
       eventHandlers:
         - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
