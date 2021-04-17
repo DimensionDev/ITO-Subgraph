@@ -2,7 +2,7 @@ name: Deploy subgraph
 
 on:
   push:
-    branches: [master]
+    branches: [master, 'develop/**']
 
 jobs:
   deploy:
