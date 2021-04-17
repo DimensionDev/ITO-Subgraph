@@ -13,7 +13,7 @@ MASK_CONTRACT_ADDRESS_LIST.push("0x0");
     {{/is_mask}}
 {{/contracts}}
 
-export const GENESIS_TIMESTAMP = 1609372800; // UNIX timestamp
+export const GENESIS_TIMESTAMP = 1616976000; // UNIX timestamp
 export const GENESIS_TIMESTAMP_MASK = 1613088000; // UNIX timestamp
 
 export const TOKEN_TYPE_ETHER = 0;

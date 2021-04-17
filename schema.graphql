@@ -1,7 +1,6 @@
 type Seller @entity {
   id: ID!
   address: Bytes!
-  name: String!
 }
 
 type Buyer @entity {
