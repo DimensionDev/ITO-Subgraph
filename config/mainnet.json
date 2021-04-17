@@ -5,26 +5,7 @@
     {
       "name": "ITO",
       "address": "0xAaea10A15129c9f064685b4185EC2a0d69E34957",
-      "startBlock": 11612486,
-      "is_mask": false
-    },
-    {
-      "name": "ITO_V2",
-      "address": "0x7aEa34bE68171c6898164f3986Db03964CCa49B7",
-      "startBlock": 11664373,
-      "is_mask": false
-    },
-    {
-      "name": "ITO_Mask",
-      "address": "0x86812da3A623ab9606976078588b80C315E55FA3",
-      "startBlock": 11902991,
-      "is_mask": true
-    },
-    {
-      "name": "ITO_Mask_V2",
-      "address": "0xc211c6013A587bB4Ad5984629B289aAd23341Fd9",
-      "startBlock": 11915348,
-      "is_mask": true
+      "startBlock": 11612486
     }
   ]
 }
