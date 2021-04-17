@@ -32,14 +32,18 @@ jobs:
 
       - run: yarn
 
-      - run: yarn prepare-subgraph:mainnet
-      - run: yarn prepare-constants:mainnet
-      - run: yarn codegen
-      - run: yarn build
-      - run: yarn deploy-thegraph-mainnet --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
+      - run: | 
+          yarn prepare-subgraph:mainnet
+          yarn prepare-constants:mainnet
+          yarn codegen
+          yarn build
+          yarn deploy-thegraph-mainnet --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
+        if: github.ref == 'refs/heads/master'
 
-      - run: yarn prepare-subgraph:ropsten
-      - run: yarn prepare-constants:ropsten
-      - run: yarn codegen
-      - run: yarn build
-      - run: yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}
+      - run: |
+          yarn prepare-subgraph:ropsten
+          yarn prepare-constants:ropsten
+          yarn codegen
+          yarn build
+          yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}
+        if: startsWith(github.ref, 'refs/heads/develop')
