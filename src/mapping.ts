@@ -71,7 +71,7 @@ export function handleFillPool(call: Fill_poolCall): void {
   let rawMessage = call.inputs.message as Array<Bytes>;
   let message = "";
   for (let i = 0; i < rawMessage.length; i += 1) {
-    message += rawMessage[i].toHexString()
+    message += rawMessage[i].toString()
   }
   pool.message = message;
   pool.hash = call.inputs._hash.toHexString();
