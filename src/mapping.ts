@@ -68,7 +68,7 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.qualification_address = call.inputs._qualification
   pool.pid = pool_id;
   pool.password = ""; // a password was stored locally and kept by seller
-  pool.message = call.inputs.message.join('');
+  pool.message = call.inputs.message;
   pool.hash = call.inputs._hash.toHexString();
   pool.limit = call.inputs._limit;
   pool.total = call.inputs._total_tokens;
