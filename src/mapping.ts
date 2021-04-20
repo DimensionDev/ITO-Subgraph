@@ -1,6 +1,6 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts";
 import { fetchToken } from "./helpers";
-import { CHAIN_ID, GENESIS_TIMESTAMP } from "./constants";
+import { CHAIN_ID, GENESIS_TIMESTAMP, GENESIS_TIMESTAMP_MASK } from "./constants";
 import {
   FillSuccess,
   DestructSuccess,
@@ -68,7 +68,12 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.qualification_address = call.inputs._qualification
   pool.pid = pool_id;
   pool.password = ""; // a password was stored locally and kept by seller
-  pool.message = call.inputs.message.join('');
+  let rawMessage = call.inputs.message as Array<Bytes>;
+  let message = "";
+  for (let i = 0; i < rawMessage.length; i += 1) {
+    message += rawMessage[i].toString()
+  }
+  pool.message = message;
   pool.hash = call.inputs._hash.toHexString();
   pool.limit = call.inputs._limit;
   pool.total = call.inputs._total_tokens;
