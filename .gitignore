@@ -2,3 +2,4 @@ build/
 generated/
 subgraph.yaml
 src/constants.ts
+node_modules

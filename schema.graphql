@@ -1,7 +1,6 @@
 type Seller @entity {
   id: ID!
   address: Bytes!
-  name: String!
 }
 
 type Buyer @entity {
@@ -22,7 +21,6 @@ type Token @entity {
 
 type Pool @entity {
   id: ID!
-  is_mask: Boolean!
   chain_id: Int!
   contract_address: Bytes!
   qualification_address: Bytes!

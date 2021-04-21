@@ -5,21 +5,8 @@
   "contracts": [
     {
       "name": "ITO",
-      "address": "0xDF0e910DcC73bdC8f4c332A4C12545928683221f",
-      "startBlock": 9464133,
-      "is_mask": false
-    },
-    {
-      "name": "ITO_Mask",
-      "address": "0x677f7BbA13108649ECFF068E8B3d55631327B83a",
-      "startBlock": 9707727,
-      "is_mask": true
-    },
-    {
-      "name": "ITO_Mask_V2",
-      "address": "0xe0Cf2512237dFdE445eCDaFABffF98DB3AaCac76",
-      "startBlock":	9728631,
-      "is_mask": true
+      "address": "0x9003aed6d33604617da90e084b081ec65f18e786",
+      "startBlock": 10054554
     }
   ]
 }
