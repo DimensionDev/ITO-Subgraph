@@ -5,7 +5,8 @@
     {
       "name": "ITO",
       "address": "0x198457da5e7f7b7fd916006837417dcf663f692d",
-      "startBlock": 12283150
+      "startBlock": 12283150,
+      "abi": "ITO_V2"      
     }
   ]
 }

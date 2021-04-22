@@ -2,11 +2,52 @@
   "chainId": 3,
   "network": "ropsten",
   "mask_to": "0x677f7BbA13108649ECFF068E8B3d55631327B83a",
+  "constant_v1": "",
   "contracts": [
     {
       "name": "ITO",
       "address": "0x9003aed6d33604617da90e084b081ec65f18e786",
-      "startBlock": 10054554
+      "startBlock": 10054554,
+      "abi": "ITO_V2",
+      "entities": [
+        {
+          "event": "SwapSuccess"
+        },
+        {
+          "event": "FillSuccess"
+        },
+        {
+          "event": "RefundSuccess"
+        },
+        {
+          "event": "WithdrawSuccess"
+        }                        
+      ],
+      "callHandlers": [
+        {
+          "function": "fill_pool(bytes32,uint256,uint256,string,address[],uint128[],uint256,address,uint256,uint256,address)",
+          "handler": "handleFillPool"
+        },
+        {
+          "function": "swap(bytes32,bytes32,bytes32,uint256,uint128)",
+          "handler": "handleSwapPool"
+        }
+      ],
+      "eventHandlers": [
+        {
+          "event": "SwapSuccess(bytes32,address,address,address,uint256,uint256)",
+          "handler": "handleSwapSuccess"
+        },        
+        {
+          "event": "FillSuccess(uint256,bytes32,address,uint256,address,string)",
+          "handler": "FillSuccess"
+        },        
+        {
+          "event": "DestructSuccess(bytes32,address,uint256,uint128[])",
+          "handler": "handleDestructSuccess"
+        }                
+      ],
+      "mapping": "mappingV2"
     }
   ]
 }

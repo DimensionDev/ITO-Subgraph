@@ -4,24 +4,23 @@ schema:
 dataSources:
 {{#contracts}}
   - kind: ethereum/contract
-    name: {{name}}
+    name: {{abi}}
     network: {{network}}
     source:
       address: "{{address}}"
-      abi: ITO
+      abi: {{abi}}
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - SwapSuccess
-        - FillSuccess
-        - RefundSuccess
-        - WithdrawSuccess
+        {{#entities}}
+          - {{event}}
+        {{/entities}}
       abis:
-        - name: ITO
-          file: ./abis/ITO.json
+        - name: {{abi}}
+          file: ./abis/{{abi}}.json
         - name: ERC20
           file: ./abis/ERC20.json
         - name: ERC20SymbolBytes
@@ -29,16 +28,14 @@ dataSources:
         - name: ERC20NameBytes
           file: ./abis/ERC20NameBytes.json
       callHandlers:
-        - function: fill_pool(bytes32,uint256,uint256,string,address[],uint128[],uint256,address,uint256,uint256,address)
-          handler: handleFillPool
-        - function: swap(bytes32,bytes32,bytes32,uint256,uint128)
-          handler: handleSwapPool
+        {{#callHandlers}}
+          - function: {{function}}
+            handler: {{handler}}
+        {{/callHandlers}}
       eventHandlers:
-        - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
-          handler: handleSwapSuccess
-        - event: FillSuccess(uint256,bytes32,address,uint256,address,string)
-          handler: handleFillSuccess
-        - event: DestructSuccess(bytes32,address,uint256,uint128[])
-          handler: handleDestructSuccess
-      file: ./src/mapping.ts
+        {{#eventHandlers}}
+          - event: {{event}}
+            handler: {{handler}}
+        {{/eventHandlers}}
+      file: ./src/{{mapping}}.ts
 {{/contracts}}

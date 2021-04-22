@@ -1,8 +1,8 @@
 import { Address } from "@graphprotocol/graph-ts";
-import { CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20 } from "./constants";
-import { ERC20 } from "../generated/ITO/ERC20";
-import { ERC20NameBytes } from "../generated/ITO/ERC20NameBytes";
-import { ERC20SymbolBytes } from "../generated/ITO/ERC20SymbolBytes";
+import { CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20 } from "./constants_v2";
+import { ERC20 } from "../generated/ITO_V2/ERC20";
+import { ERC20NameBytes } from "../generated/ITO_V2/ERC20NameBytes";
+import { ERC20SymbolBytes } from "../generated/ITO_V2/ERC20SymbolBytes";
 import { Token } from "../generated/schema";
 
 export function isEth(value: string): boolean {
