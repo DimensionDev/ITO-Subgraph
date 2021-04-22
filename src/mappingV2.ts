@@ -7,7 +7,7 @@ import {
   Fill_poolCall,
   SwapCall,
   SwapSuccess,
-} from "../generated/ITO/ITO";
+} from "../generated/ITO_V2/ITO_V2";
 import {
   PoolInfo,
   BuyInfo,
