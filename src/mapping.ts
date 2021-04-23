@@ -155,7 +155,7 @@ export function handleSwapSuccess(event: SwapSuccess): void {
   if (pool == null) return;
   pool.last_updated_time = event.block.timestamp.toI32();
   pool.total_remaining = pool.total_remaining.minus(event.params.to_value);
-  if (!pool.buyers.includes(buyer_addr)) {
+  if (!pool.buyers.includes(buyer.id)) {
     pool.buyers = pool.buyers.concat([buyer.id]);
   }
   let exchange_in_volumes = pool.exchange_in_volumes;
