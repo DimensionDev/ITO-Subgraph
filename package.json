@@ -2,10 +2,6 @@
   "name": "ito-subgraph",
   "license": "MIT",
   "scripts": {
-    "prepare-subgraph:mainnet": "mustache config/mainnet.json templates/subgraph.yaml.template > subgraph.yaml",
-    "prepare-subgraph:ropsten": "mustache config/ropsten.json templates/subgraph.yaml.template > subgraph.yaml",
-    "prepare-constants:mainnet": "mustache config/mainnet.json templates/constants.ts.template > src/constants.ts",
-    "prepare-constants:ropsten": "mustache config/ropsten.json templates/constants_v2.ts.template > src/constants_v2.ts",
     "prepare:ropsten": "NETWORK=ropsten ts-node mustache.ts",
     "prepare:mainnet": "NETWORK=mainnet ts-node mustache.ts",
     "codegen": "graph codegen",
