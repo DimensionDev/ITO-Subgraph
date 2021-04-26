@@ -1,0 +1,40 @@
+{
+  "entities": [
+    {
+      "event": "SwapSuccess"
+    },
+    {
+      "event": "FillSuccess"
+    },
+    {
+      "event": "RefundSuccess"
+    },
+    {
+      "event": "WithdrawSuccess"
+    }                        
+  ],
+  "callHandlers": [
+    {
+      "function": "fill_pool(bytes32,uint256,uint256,string,address[],uint128[],uint256,address,uint256,uint256,address)",
+      "handler": "handleFillPool"
+    },
+    {
+      "function": "swap(bytes32,bytes32,bytes32,uint256,uint128)",
+      "handler": "handleSwapPool"
+    }
+  ],
+  "eventHandlers": [
+    {
+      "event": "SwapSuccess(bytes32,address,address,address,uint256,uint256)",
+      "handler": "handleSwapSuccess"
+    },        
+    {
+      "event": "FillSuccess(uint256,bytes32,address,uint256,address,string)",
+      "handler": "handleFillSuccess"
+    },        
+    {
+      "event": "DestructSuccess(bytes32,address,uint256,uint128[])",
+      "handler": "handleDestructSuccess"
+    }                
+  ]  
+}

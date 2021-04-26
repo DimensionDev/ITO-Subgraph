@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+export const subgraphYamlTmpl = `specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
@@ -39,3 +39,4 @@ dataSources:
         {{/eventHandlers}}
       file: ./src/{{mapping}}.ts
 {{/contracts}}
+`
