@@ -48,6 +48,8 @@ export function handleFillPool(call: Fill_poolCall): void {
   // create pool
   let pool_id = pool_info.pid
   let pool = new Pool(pool_id)
+
+  pool.is_mask = false
   pool.chain_id = CHAIN_ID
   pool.contract_address = call.to
   pool.qualification_address = call.inputs._qualification
