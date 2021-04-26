@@ -4,7 +4,7 @@ schema:
 dataSources:
 {{#contracts}}
   - kind: ethereum/contract
-    name: {{abi}}
+    name: {{name}}
     network: {{network}}
     source:
       address: "{{address}}"

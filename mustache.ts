@@ -1,8 +1,9 @@
 import fs from 'fs'
 import mainnetJson from './config/mainnet.json'
 import ropstenJson from './config/ropsten.json'
+import abiV1Json from './config/abi_v1.json'
 import abiV2Json from './config/abi_v2.json'
-import { constantsTmplV2 } from './templates/constants'
+import { constantsTmplV1, constantsTmplV2 } from './templates/constants'
 import { subgraphYamlTmpl } from './templates/subgraph'
 import mustache from 'mustache'
 
@@ -25,10 +26,14 @@ type GRAPH_HANDLER = {
 }
 
 const graphHandlers: Readonly<Record<string, GRAPH_HANDLER>> = {
+  ITO_V1: abiV1Json,  
   ITO_V2: abiV2Json,
 }
 
-const constantsTmpls = [{ filename: 'constants_v2.ts', tmpl: constantsTmplV2 }]
+const constantsTmpls = [
+  { filename: 'constants_v1.ts', tmpl: constantsTmplV1 },  
+  { filename: 'constants_v2.ts', tmpl: constantsTmplV2 }
+]
 
 function generate(config: CONFIG) {
   config.contracts = config.contracts.map(contract => ({ ...contract, ...graphHandlers[contract.abi] }))

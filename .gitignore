@@ -1,7 +1,3 @@
 build/
 generated/
-subgraph.yaml
-src/constants.ts
-src/constants_v1.ts
-src/constants_v2.ts
 node_modules

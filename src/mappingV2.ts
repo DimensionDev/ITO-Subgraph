@@ -1,5 +1,5 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts'
-import { fetchToken } from './helpers'
+import { fetchToken } from './helpers_v2'
 import { CHAIN_ID, GENESIS_TIMESTAMP } from './constants_v2'
 import { FillSuccess, DestructSuccess, Fill_poolCall, SwapCall, SwapSuccess } from '../generated/ITO_V2/ITO_V2'
 import { PoolInfo, BuyInfo, DestructInfo, Pool, Seller, Buyer, Token, SellInfo } from '../generated/schema'
