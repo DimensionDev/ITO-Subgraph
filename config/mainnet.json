@@ -4,8 +4,43 @@
   "contracts": [
     {
       "name": "ITO",
+      "address": "0xAaea10A15129c9f064685b4185EC2a0d69E34957",
+      "startBlock": 11612486,
+      "abi": "ITO_V1",
+      "is_mask": false,
+      "mapping": "mappingV1" 
+    },
+    {
+      "name": "ITO_V1",
+      "address": "0x7aEa34bE68171c6898164f3986Db03964CCa49B7",
+      "startBlock": 11664373,
+      "abi": "ITO_V1",
+      "is_mask": false,
+      "mapping": "mappingV1" 
+    },
+    {
+      "name": "ITO_Mask",
+      "address": "0x86812da3A623ab9606976078588b80C315E55FA3",
+      "startBlock": 11902991,
+      "abi": "ITO_V1",
+      "is_mask": true,
+      "mapping": "mappingV1" 
+    },
+    {
+      "name": "ITO_Mask_V2",
+      "address": "0xc211c6013A587bB4Ad5984629B289aAd23341Fd9",
+      "startBlock": 11915348,
+      "abi": "ITO_V1",
+      "is_mask": true,
+      "mapping": "mappingV1" 
+    },    
+    {
+      "name": "ITO_V2",
       "address": "0x198457da5e7f7b7fd916006837417dcf663f692d",
-      "startBlock": 12283150
+      "startBlock": 12283150,
+      "abi": "ITO_V2",
+      "is_mask": false,
+      "mapping": "mappingV2" 
     }
   ]
 }

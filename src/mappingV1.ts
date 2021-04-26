@@ -1,13 +1,13 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { fetchToken } from "./helpers";
-import { CHAIN_ID, GENESIS_TIMESTAMP } from "./constants";
+import { fetchToken, isMask } from "./helpers_v1";
+import { CHAIN_ID, GENESIS_TIMESTAMP, GENESIS_TIMESTAMP_MASK } from "./constants_v1";
 import {
   FillSuccess,
   DestructSuccess,
   Fill_poolCall,
   SwapCall,
   SwapSuccess,
-} from "../generated/ITO/ITO";
+} from "../generated/ITO/ITO_V1";
 import {
   PoolInfo,
   BuyInfo,
@@ -34,6 +34,7 @@ export function handleFillPool(call: Fill_poolCall): void {
     seller = new Seller(seller_addr);
   }
   seller.address = call.from;
+  seller.name = call.inputs.name;
   seller.save();
 
   // create token
@@ -63,7 +64,9 @@ export function handleFillPool(call: Fill_poolCall): void {
   // create pool
   let pool_id = pool_info.pid;
   let pool = new Pool(pool_id);
+  let is_mask = isMask(call.to)
   pool.chain_id = CHAIN_ID;
+  pool.is_mask = is_mask
   pool.contract_address = call.to;
   pool.qualification_address = call.inputs._qualification
   pool.pid = pool_id;
@@ -74,10 +77,10 @@ export function handleFillPool(call: Fill_poolCall): void {
   pool.total = call.inputs._total_tokens;
   pool.total_remaining = call.inputs._total_tokens;
   pool.start_time = call.inputs._start
-    .plus(BigInt.fromI32(GENESIS_TIMESTAMP))
+    .plus(BigInt.fromI32(is_mask ? GENESIS_TIMESTAMP_MASK : GENESIS_TIMESTAMP ))
     .toI32();
   pool.end_time = call.inputs._end
-    .plus(BigInt.fromI32(GENESIS_TIMESTAMP))
+    .plus(BigInt.fromI32(is_mask ? GENESIS_TIMESTAMP_MASK : GENESIS_TIMESTAMP))
     .toI32();
   pool.creation_time = pool_info.creation_time;
   pool.last_updated_time = pool_info.creation_time;
@@ -155,7 +158,7 @@ export function handleSwapSuccess(event: SwapSuccess): void {
   if (pool == null) return;
   pool.last_updated_time = event.block.timestamp.toI32();
   pool.total_remaining = pool.total_remaining.minus(event.params.to_value);
-  if (!pool.buyers.includes(buyer.id)) {
+  if (!pool.buyers.includes(buyer_addr)) {
     pool.buyers = pool.buyers.concat([buyer.id]);
   }
   let exchange_in_volumes = pool.exchange_in_volumes;

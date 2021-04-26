@@ -41,8 +41,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
 
       - run: |
-          yarn prepare-subgraph:ropsten
-          yarn prepare-constants:ropsten
+          yarn prepare:ropsten
           yarn codegen
           yarn build
           yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}

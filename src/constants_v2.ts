@@ -1,4 +1,4 @@
-export const CHAIN_ID = {{chainId}};
+export const CHAIN_ID = 3;
 
 export const GENESIS_TIMESTAMP = 1616976000; // UNIX timestamp
 export const GENESIS_TIMESTAMP_MASK = 1613088000; // UNIX timestamp
