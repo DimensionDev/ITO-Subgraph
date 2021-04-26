@@ -19,6 +19,7 @@ export function handleFillPool(call: Fill_poolCall): void {
     seller = new Seller(seller_addr)
   }
   seller.address = call.from
+  seller.name = seller_addr
   seller.save()
 
   // create token
