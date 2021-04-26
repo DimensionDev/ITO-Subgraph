@@ -33,8 +33,7 @@ jobs:
       - run: yarn
 
       - run: | 
-          yarn prepare-subgraph:mainnet
-          yarn prepare-constants:mainnet
+          yarn prepare:mainnet
           yarn codegen
           yarn build
           yarn deploy-thegraph-mainnet --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
