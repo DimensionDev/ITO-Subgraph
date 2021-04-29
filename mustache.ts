@@ -1,6 +1,7 @@
 import fs from 'fs'
 import mainnetJson from './config/mainnet.json'
 import ropstenJson from './config/ropsten.json'
+import bscChapelJson from './config/bsc-chapel.json'
 import abiV1Json from './config/abi_v1.json'
 import abiV2Json from './config/abi_v2.json'
 import { constantsTmplV1, constantsTmplV2 } from './templates/constants'
@@ -49,8 +50,9 @@ function generate(config: CONFIG) {
 }
 
 const configs = {
-  ropsten: ropstenJson,
-  mainnet: mainnetJson
+  'ropsten': ropstenJson,
+  'mainnet': mainnetJson,
+  'bsc-chapel': bscChapelJson,
 }
 
 const network = process.env.NETWORK as (keyof typeof configs)

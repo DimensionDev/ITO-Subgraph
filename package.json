@@ -3,15 +3,13 @@
   "license": "MIT",
   "scripts": {
     "prepare:ropsten": "NETWORK=ropsten ts-node mustache.ts",
+    "prepare:bsc-chapel": "NETWORK=bsc-chapel ts-node mustache.ts",
     "prepare:mainnet": "NETWORK=mainnet ts-node mustache.ts",
     "codegen": "graph codegen",
     "build": "graph build",
+    "deploy-thegraph-bsc-chapel": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito-bsc-chapel",    
     "deploy-thegraph-mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito-mainnet",
     "deploy-thegraph-ropsten": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito",
-    "deploy-mask-node": "graph deploy --node https://graph.maskbook.com/json-rpc/ --ipfs https://api.thegraph.com/ipfs/ dimensiondev/mask-ito",
-    "create-local": "graph create --node http://localhost:8020/ dimensiondev/mask-ito",
-    "remove-local": "graph remove --node http://localhost:8020/ dimensiondev/mask-ito",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 dimensiondev/mask-ito",
     "format": "prettier --write './**/*.ts'"
   },
   "dependencies": {
