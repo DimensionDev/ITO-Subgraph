@@ -43,9 +43,12 @@ jobs:
           yarn prepare:ropsten
           yarn codegen
           yarn build
-          yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}
+          yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}        
+        if: startsWith(github.ref, 'refs/heads/develop')
+
+      - run: |
           yarn prepare:bsc-chapel
           yarn codegen
           yarn build
           yarn deploy-thegraph-bsc-chapel --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}          
-        if: startsWith(github.ref, 'refs/heads/develop')
+        if: startsWith(github.ref, 'refs/heads/develop')        

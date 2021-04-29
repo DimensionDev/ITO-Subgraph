@@ -1,6 +1,6 @@
 {
   "chainId": 97,
-  "network": "bsc-chapel",
+  "network": "bsc",
   "mask_to": "0x677f7BbA13108649ECFF068E8B3d55631327B83a",
   "contracts": [
     {
