@@ -39,12 +39,12 @@ jobs:
           yarn deploy-thegraph-mainnet --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
         if: github.ref == 'refs/heads/master'
 
-      - run: |
-          yarn prepare:ropsten
-          yarn codegen
-          yarn build
-          yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}        
-        if: startsWith(github.ref, 'refs/heads/develop')
+      # - run: |
+      #     yarn prepare:ropsten
+      #     yarn codegen
+      #     yarn build
+      #     yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}        
+      #   if: startsWith(github.ref, 'refs/heads/develop')
 
       - run: |
           yarn prepare:bsc-chapel

@@ -27,11 +27,6 @@ dataSources:
           file: ./abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
           file: ./abis/ERC20NameBytes.json
-      callHandlers:
-        {{#callHandlers}}
-          - function: {{function}}
-            handler: {{handler}}
-        {{/callHandlers}}
       eventHandlers:
         {{#eventHandlers}}
           - event: {{event}}
