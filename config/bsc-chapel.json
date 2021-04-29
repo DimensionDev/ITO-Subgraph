@@ -6,7 +6,7 @@
     {
       "name": "ITO_V2",
       "address": "0x08a2eefc3a6fc396ab4f4c1c65253b5cee8cdebe",
-      "startBlock": 8369668,
+      "startBlock": 6179840,
       "abi": "ITO_V2",
       "is_mask": false,
       "mapping": "mappingV2"
