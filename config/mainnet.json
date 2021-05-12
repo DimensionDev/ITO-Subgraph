@@ -41,6 +41,14 @@
       "abi": "ITO_V2",
       "is_mask": false,
       "mapping": "mappingV2" 
-    }
+    },
+    {
+      "name": "ITO_V3",
+      "address": "0xf110fec3075d7531141b6bf16b11604cb028a17b",
+      "startBlock": 12420051,
+      "abi": "ITO_V2",
+      "is_mask": false,
+      "mapping": "mappingV2"      
+    }    
   ]
 }
