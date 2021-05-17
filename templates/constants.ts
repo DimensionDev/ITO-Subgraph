@@ -1,5 +1,9 @@
-export const constantsTmplV1 = `export const CHAIN_ID = {{chainId}};
-export let MASK_CONTRACT_ADDRESS_LIST = new Array<string>({{contracts.length}});
+export const constantsTmpl = `export const CHAIN_ID = {{chainId}};
+export const TOKEN_TYPE_ETHER = 0;
+export const TOKEN_TYPE_ERC20 = 1;
+
+`
+export const constantsTmplV1 = `export let MASK_CONTRACT_ADDRESS_LIST = new Array<string>({{contracts.length}});
 
 {{#contracts}}
     {{#is_mask}}
@@ -15,15 +19,9 @@ MASK_CONTRACT_ADDRESS_LIST.push("0x0");
 export const GENESIS_TIMESTAMP = 1609372800; // UNIX timestamp
 export const GENESIS_TIMESTAMP_MASK = 1613088000; // UNIX timestamp
 
-export const TOKEN_TYPE_ETHER = 0;
-export const TOKEN_TYPE_ERC20 = 1;
 `
 
-export const constantsTmplV2 = `export const CHAIN_ID = {{chainId}};
-
-export const GENESIS_TIMESTAMP = 1616976000; // UNIX timestamp
+export const constantsTmplV2 = `export const GENESIS_TIMESTAMP = 1616976000; // UNIX timestamp
 export const GENESIS_TIMESTAMP_MASK = 1613088000; // UNIX timestamp
 
-export const TOKEN_TYPE_ETHER = 0;
-export const TOKEN_TYPE_ERC20 = 1;
 `

@@ -3,7 +3,7 @@ import mainnetJson from './config/mainnet.json'
 import ropstenJson from './config/ropsten.json'
 import abiV1Json from './config/abi_v1.json'
 import abiV2Json from './config/abi_v2.json'
-import { constantsTmplV1, constantsTmplV2 } from './templates/constants'
+import { constantsTmpl, constantsTmplV1, constantsTmplV2 } from './templates/constants'
 import { subgraphYamlTmpl } from './templates/subgraph'
 import mustache from 'mustache'
 
@@ -31,6 +31,7 @@ const graphHandlers: Readonly<Record<string, GRAPH_HANDLER>> = {
 }
 
 const constantsTmpls = [
+  { filename: 'constants.ts', tmpl: constantsTmpl }, 
   { filename: 'constants_v1.ts', tmpl: constantsTmplV1 },  
   { filename: 'constants_v2.ts', tmpl: constantsTmplV2 }
 ]

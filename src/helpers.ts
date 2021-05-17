@@ -1,5 +1,6 @@
 import { Address } from '@graphprotocol/graph-ts'
-import { CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20 } from './constants_v2'
+import { MASK_CONTRACT_ADDRESS_LIST } from './constants_v1'
+import { CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20 } from './constants'
 import { ERC20 } from '../generated/ITO_V2/ERC20'
 import { ERC20NameBytes } from '../generated/ITO_V2/ERC20NameBytes'
 import { ERC20SymbolBytes } from '../generated/ITO_V2/ERC20SymbolBytes'
@@ -10,7 +11,20 @@ export function isEth(value: string): boolean {
 }
 
 export function isNullEthValue(value: string): boolean {
-  return value == '0x0000000000000000000000000000000000000000000000000000000000000001'
+  return (
+    value ==
+    "0x0000000000000000000000000000000000000000000000000000000000000001"
+  );
+}
+
+export function isMask(address: Address): boolean {
+  for (let i = 0; i < MASK_CONTRACT_ADDRESS_LIST.length; i += 1) {
+    // skip placeholder
+    if (MASK_CONTRACT_ADDRESS_LIST[i] == "0x0") continue
+    let address_ = Address.fromHexString(MASK_CONTRACT_ADDRESS_LIST[i])
+    if (address == address_) return true
+  }
+  return false
 }
 
 export function fetchToken(tokenAddress: Address): Token {
