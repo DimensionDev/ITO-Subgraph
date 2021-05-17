@@ -154,3 +154,41 @@ dataSources:
           - event: DestructSuccess(bytes32,address,uint256,uint128[])
             handler: handleDestructSuccess
       file: ./src/mappingV2.ts
+  - kind: ethereum/contract
+    name: ITO_V3
+    network: ropsten
+    source:
+      address: "0x37c2f41085ff45f54652c359a7de4deb9d125bf2"
+      abi: ITO_V2
+      startBlock: 10220034
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+          - SwapSuccess
+          - FillSuccess
+          - RefundSuccess
+          - WithdrawSuccess
+      abis:
+        - name: ITO_V2
+          file: ./abis/ITO_V2.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      callHandlers:
+          - function: fill_pool(bytes32,uint256,uint256,string,address[],uint128[],uint256,address,uint256,uint256,address)
+            handler: handleFillPool
+          - function: swap(bytes32,bytes32,bytes32,uint256,uint128)
+            handler: handleSwapPool
+      eventHandlers:
+          - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
+            handler: handleSwapSuccess
+          - event: FillSuccess(uint256,bytes32,address,uint256,address,string)
+            handler: handleFillSuccess
+          - event: DestructSuccess(bytes32,address,uint256,uint128[])
+            handler: handleDestructSuccess
+      file: ./src/mappingV2.ts

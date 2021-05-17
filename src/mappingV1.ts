@@ -1,6 +1,7 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { fetchToken, isMask } from "./helpers_v1";
-import { CHAIN_ID, GENESIS_TIMESTAMP, GENESIS_TIMESTAMP_MASK } from "./constants_v1";
+import { fetchToken, isMask } from "./helpers";
+import { CHAIN_ID } from "./constants";
+import { GENESIS_TIMESTAMP, GENESIS_TIMESTAMP_MASK } from "./constants_v1";
 import {
   FillSuccess,
   DestructSuccess,
