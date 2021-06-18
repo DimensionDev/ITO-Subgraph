@@ -1,34 +1,30 @@
-import { Address, BigInt } from '@graphprotocol/graph-ts'
+import { BigInt, Address } from '@graphprotocol/graph-ts'
 import { fetchToken } from './helpers'
 import { CHAIN_ID } from './constants'
 import { GENESIS_TIMESTAMP } from './constants_v2'
-import { FillSuccess, DestructSuccess, Fill_poolCall, SwapCall, SwapSuccess } from '../generated/ITO_V2/ITO_V2'
+import { FillSuccess, DestructSuccess, SwapSuccess } from '../generated/BSC_ITO/ITO_V3'
 import { PoolInfo, BuyInfo, DestructInfo, Pool, Seller, Buyer, Token, SellInfo } from '../generated/schema'
 
-export function handleFillPool(call: Fill_poolCall): void {
-  let txHash = call.transaction.hash.toHexString()
-  let pool_info = PoolInfo.load(txHash)
-
-  // the event handler will be called before call handler
-  // if a map record cannot be found than we skip the call
-  if (!pool_info) return
+export function handleFillSuccess(event: FillSuccess): void {
+  let txHash = event.transaction.hash.toHexString()
+  let poolMap = new PoolInfo(txHash)
 
   // create seller
-  let seller_addr = call.from.toHexString()
+  let seller_addr = event.transaction.from.toHexString()
   let seller = Seller.load(seller_addr)
   if (seller == null) {
     seller = new Seller(seller_addr)
   }
-  seller.address = call.from
+  seller.address = event.transaction.from
   seller.name = seller_addr
-  seller.save()
+  seller.save()  
 
   // create token
-  let token = fetchToken(call.inputs._token_addr)
-  token.save()
+  let token = fetchToken(event.params.token_address)
+  token.save()  
 
   // create exchange tokens
-  let addrs = call.inputs._exchange_addrs as Array<Address>
+  let addrs = event.params.exchange_addrs as Array<Address>
   let exchange_addrs = new Array<string>(addrs.length)
   let exchange_tokens = new Array<Token>(addrs.length)
   for (let i = 0; i < addrs.length; i += 1) {
@@ -45,30 +41,35 @@ export function handleFillPool(call: Fill_poolCall): void {
   for (let i = 0; i < addrs.length; i += 1) {
     exchange_in_volumes[i] = BigInt.fromI32(0)
     exchange_out_volumes[i] = BigInt.fromI32(0)
-  }
+  }  
+
+  poolMap.pid = event.params.id.toHexString()
+  poolMap.creation_time = event.params.creation_time.toI32()
+
+  poolMap.save()
 
   // create pool
-  let pool_id = pool_info.pid
-  let pool = new Pool(pool_id)
+  let pool_id = poolMap.pid
+  let pool = new Pool(pool_id)  
 
   pool.is_mask = false
   pool.chain_id = CHAIN_ID
-  pool.contract_address = call.to
-  pool.qualification_address = call.inputs._qualification
+  pool.contract_address = event.transaction.to!
+  pool.qualification_address = event.params.qualification
   pool.pid = pool_id
   pool.password = '' // a password was stored locally and kept by seller
-  pool.message = call.inputs.message
-  pool.limit = call.inputs._limit
-  pool.total = call.inputs._total_tokens
-  pool.total_remaining = call.inputs._total_tokens
-  pool.start_time = call.inputs._start.plus(BigInt.fromI32(GENESIS_TIMESTAMP)).toI32()
-  pool.end_time = call.inputs._end.plus(BigInt.fromI32(GENESIS_TIMESTAMP)).toI32()
-  pool.creation_time = pool_info.creation_time
-  pool.last_updated_time = pool_info.creation_time
+  pool.message = event.params.message
+  pool.limit = event.params.limit
+  pool.total = event.params.total
+  pool.total_remaining = event.params.total
+  pool.start_time = event.params.start.plus(BigInt.fromI32(GENESIS_TIMESTAMP)).toI32()
+  pool.end_time = event.params.end.plus(BigInt.fromI32(GENESIS_TIMESTAMP)).toI32()
+  pool.creation_time = poolMap.creation_time  
+  pool.last_updated_time = poolMap.creation_time
   pool.token = token.id
   pool.seller = seller.id
   pool.buyers = []
-  pool.exchange_amounts = call.inputs._ratios
+  pool.exchange_amounts = event.params.ratios
   pool.exchange_in_volumes = exchange_in_volumes
   pool.exchange_out_volumes = exchange_out_volumes
   pool.exchange_tokens = exchange_addrs
@@ -76,28 +77,16 @@ export function handleFillPool(call: Fill_poolCall): void {
 
   // create sell info
   let sellInfoId =
-    BigInt.fromI32(call.block.timestamp.toI32()).toHexString() +
+    BigInt.fromI32(event.block.timestamp.toI32()).toHexString() +
     '_' +
-    BigInt.fromI32(call.transaction.index.toI32()).toHexString()
+    BigInt.fromI32(event.transaction.index.toI32()).toHexString()
   let sellInfo = new SellInfo(sellInfoId)
   sellInfo.pool = pool_id
   sellInfo.seller = seller.id
-  sellInfo.amount = call.inputs._total_tokens
-  sellInfo.timestamp = call.block.timestamp.toI32()
+  sellInfo.amount = event.params.total
+  sellInfo.timestamp = event.block.timestamp.toI32()
   sellInfo.token = token.id
-  sellInfo.save()
-}
-
-export function handleSwapPool(call: SwapCall): void {
-  // update buy info
-  let buyInfoId =
-    BigInt.fromI32(call.block.timestamp.toI32()).toHexString() +
-    '_' +
-    BigInt.fromI32(call.transaction.index.toI32()).toHexString()
-  let buyInfo = new BuyInfo(buyInfoId)
-  if (!buyInfo) return
-  buyInfo.amount = call.inputs.input_total
-  buyInfo.save()
+  sellInfo.save()  
 }
 
 export function handleSwapSuccess(event: SwapSuccess): void {
@@ -128,7 +117,7 @@ export function handleSwapSuccess(event: SwapSuccess): void {
   buyInfo.buyer = buyer.id
   buyInfo.timestamp = event.block.timestamp.toI32()
   // the amount will be updated in handleSwapPool
-  buyInfo.amount = BigInt.fromI32(0)
+  buyInfo.amount = event.params.input_total
   buyInfo.amount_sold = event.params.from_value
   buyInfo.amount_bought = event.params.to_value
   buyInfo.token = token.id
@@ -155,18 +144,6 @@ export function handleSwapSuccess(event: SwapSuccess): void {
   pool.exchange_in_volumes = exchange_in_volumes
   pool.exchange_out_volumes = exchange_out_volumes
   pool.save()
-}
-
-export function handleFillSuccess(event: FillSuccess): void {
-  let txHash = event.transaction.hash.toHexString()
-
-  // the event handlers will be triggered before call handlers in the same transaction
-  // this event handler only stores the necessary pool info into a map
-  // the creation of the pool happens when the call handler was triggered
-  let poolMap = new PoolInfo(txHash)
-  poolMap.pid = event.params.id.toHexString()
-  poolMap.creation_time = event.params.creation_time.toI32()
-  poolMap.save()
 }
 
 export function handleDestructSuccess(event: DestructSuccess): void {

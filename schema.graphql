@@ -29,7 +29,6 @@ type Pool @entity {
   pid: String! # pool id
   password: String!
   message: String!
-  hash: String!
   limit: BigInt!
   total: BigInt!
   total_remaining: BigInt!

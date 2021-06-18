@@ -2,7 +2,7 @@ name: Deploy subgraph
 
 on:
   push:
-    branches: [master, 'develop/**']
+    branches: [master, 'develop/ropsten/**', 'develop/bsc/**', 'develop/polygon/**']
 
 jobs:
   deploy:
@@ -44,4 +44,11 @@ jobs:
           yarn codegen
           yarn build
           yarn deploy-thegraph-ropsten --access-token ${{ secrets.ACCESS_TOKEN_ROPSTEN }}
-        if: startsWith(github.ref, 'refs/heads/develop')
+        if: startsWith(github.ref, 'refs/heads/develop/ropsten')
+
+      - run: |
+          yarn prepare:bsc
+          yarn codegen
+          yarn build
+          yarn deploy-thegraph-bsc --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
+        if: startsWith(github.ref, 'refs/heads/develop/bsc')        

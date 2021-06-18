@@ -1,4 +1,4 @@
-export const subgraphYamlTmpl = `specVersion: 0.0.2
+export const subgraphYamlTmpl = (hasCallHandlers: boolean) => `specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
@@ -27,11 +27,12 @@ dataSources:
           file: ./abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
           file: ./abis/ERC20NameBytes.json
-      callHandlers:
+      ${hasCallHandlers ? 
+     `callHandlers:
         {{#callHandlers}}
           - function: {{function}}
             handler: {{handler}}
-        {{/callHandlers}}
+        {{/callHandlers}}` : ``}
       eventHandlers:
         {{#eventHandlers}}
           - event: {{event}}

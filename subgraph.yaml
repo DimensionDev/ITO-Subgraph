@@ -3,12 +3,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: ITO
-    network: ropsten
+    name: BSC_ITO
+    network: bsc
     source:
-      address: "0xDF0e910DcC73bdC8f4c332A4C12545928683221f"
-      abi: ITO_V1
-      startBlock: 9464133
+      address: "0x54a0A221C25Fc0a347EC929cFC5db0be17fA2a2B"
+      abi: ITO_V3
+      startBlock: 8398330
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -19,176 +19,20 @@ dataSources:
           - RefundSuccess
           - WithdrawSuccess
       abis:
-        - name: ITO_V1
-          file: ./abis/ITO_V1.json
+        - name: ITO_V3
+          file: ./abis/ITO_V3.json
         - name: ERC20
           file: ./abis/ERC20.json
         - name: ERC20SymbolBytes
           file: ./abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
           file: ./abis/ERC20NameBytes.json
-      callHandlers:
-          - function: fill_pool(bytes32,uint256,uint256,string,string,address[],uint128[],address,uint256,uint256,address)
-            handler: handleFillPool
-          - function: swap(bytes32,bytes32,address,bytes32,uint256,uint128)
-            handler: handleSwapPool
+      
       eventHandlers:
-          - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
+          - event: SwapSuccess(bytes32,address,address,address,uint256,uint256,uint128)
             handler: handleSwapSuccess
-          - event: FillSuccess(uint256,bytes32,address,uint256,address,string,string)
+          - event: FillSuccess(uint256,bytes32,address,uint256,address,string,uint256,uint256,address[],uint128[],address,uint256)
             handler: handleFillSuccess
           - event: DestructSuccess(bytes32,address,uint256,uint128[])
             handler: handleDestructSuccess
-      file: ./src/mappingV1.ts
-  - kind: ethereum/contract
-    name: ITO_Mask
-    network: ropsten
-    source:
-      address: "0x677f7BbA13108649ECFF068E8B3d55631327B83a"
-      abi: ITO_V1
-      startBlock: 9707727
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-          - SwapSuccess
-          - FillSuccess
-          - RefundSuccess
-          - WithdrawSuccess
-      abis:
-        - name: ITO_V1
-          file: ./abis/ITO_V1.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
-      callHandlers:
-          - function: fill_pool(bytes32,uint256,uint256,string,string,address[],uint128[],address,uint256,uint256,address)
-            handler: handleFillPool
-          - function: swap(bytes32,bytes32,address,bytes32,uint256,uint128)
-            handler: handleSwapPool
-      eventHandlers:
-          - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
-            handler: handleSwapSuccess
-          - event: FillSuccess(uint256,bytes32,address,uint256,address,string,string)
-            handler: handleFillSuccess
-          - event: DestructSuccess(bytes32,address,uint256,uint128[])
-            handler: handleDestructSuccess
-      file: ./src/mappingV1.ts
-  - kind: ethereum/contract
-    name: ITO_Mask_V2
-    network: ropsten
-    source:
-      address: "0xe0Cf2512237dFdE445eCDaFABffF98DB3AaCac76"
-      abi: ITO_V1
-      startBlock: 9728631
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-          - SwapSuccess
-          - FillSuccess
-          - RefundSuccess
-          - WithdrawSuccess
-      abis:
-        - name: ITO_V1
-          file: ./abis/ITO_V1.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
-      callHandlers:
-          - function: fill_pool(bytes32,uint256,uint256,string,string,address[],uint128[],address,uint256,uint256,address)
-            handler: handleFillPool
-          - function: swap(bytes32,bytes32,address,bytes32,uint256,uint128)
-            handler: handleSwapPool
-      eventHandlers:
-          - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
-            handler: handleSwapSuccess
-          - event: FillSuccess(uint256,bytes32,address,uint256,address,string,string)
-            handler: handleFillSuccess
-          - event: DestructSuccess(bytes32,address,uint256,uint128[])
-            handler: handleDestructSuccess
-      file: ./src/mappingV1.ts
-  - kind: ethereum/contract
-    name: ITO_V2
-    network: ropsten
-    source:
-      address: "0x9003aed6d33604617da90e084b081ec65f18e786"
-      abi: ITO_V2
-      startBlock: 10054554
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-          - SwapSuccess
-          - FillSuccess
-          - RefundSuccess
-          - WithdrawSuccess
-      abis:
-        - name: ITO_V2
-          file: ./abis/ITO_V2.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
-      callHandlers:
-          - function: fill_pool(bytes32,uint256,uint256,string,address[],uint128[],uint256,address,uint256,uint256,address)
-            handler: handleFillPool
-          - function: swap(bytes32,bytes32,bytes32,uint256,uint128)
-            handler: handleSwapPool
-      eventHandlers:
-          - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
-            handler: handleSwapSuccess
-          - event: FillSuccess(uint256,bytes32,address,uint256,address,string)
-            handler: handleFillSuccess
-          - event: DestructSuccess(bytes32,address,uint256,uint128[])
-            handler: handleDestructSuccess
-      file: ./src/mappingV2.ts
-  - kind: ethereum/contract
-    name: ITO_V3
-    network: ropsten
-    source:
-      address: "0x37c2f41085ff45f54652c359a7de4deb9d125bf2"
-      abi: ITO_V2
-      startBlock: 10220034
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-          - SwapSuccess
-          - FillSuccess
-          - RefundSuccess
-          - WithdrawSuccess
-      abis:
-        - name: ITO_V2
-          file: ./abis/ITO_V2.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
-      callHandlers:
-          - function: fill_pool(bytes32,uint256,uint256,string,address[],uint128[],uint256,address,uint256,uint256,address)
-            handler: handleFillPool
-          - function: swap(bytes32,bytes32,bytes32,uint256,uint128)
-            handler: handleSwapPool
-      eventHandlers:
-          - event: SwapSuccess(bytes32,address,address,address,uint256,uint256)
-            handler: handleSwapSuccess
-          - event: FillSuccess(uint256,bytes32,address,uint256,address,string)
-            handler: handleFillSuccess
-          - event: DestructSuccess(bytes32,address,uint256,uint128[])
-            handler: handleDestructSuccess
-      file: ./src/mappingV2.ts
+      file: ./src/mappingV3.ts

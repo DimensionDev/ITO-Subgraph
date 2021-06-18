@@ -1,0 +1,16 @@
+{
+  "chainId": 56,
+  "network": "bsc",
+  "hasCallHandler": false,
+  "version": "BSC_ITO",
+  "contracts": [
+    {
+      "name": "BSC_ITO",
+      "address": "0x54a0A221C25Fc0a347EC929cFC5db0be17fA2a2B",
+      "startBlock": 8398330,
+      "abi": "ITO_V3",
+      "is_mask": false,
+      "mapping": "mappingV3"
+    }
+  ]
+}
