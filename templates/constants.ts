@@ -1,6 +1,9 @@
 export const constantsTmpl = `export const CHAIN_ID = {{chainId}};
 export const TOKEN_TYPE_ETHER = 0;
 export const TOKEN_TYPE_ERC20 = 1;
+export { ERC20 } from "../generated/{{version}}/ERC20";
+export { ERC20NameBytes } from "../generated/{{version}}/ERC20NameBytes";
+export { ERC20SymbolBytes } from "../generated/{{version}}/ERC20SymbolBytes";
 
 `
 export const constantsTmplV1 = `export let MASK_CONTRACT_ADDRESS_LIST = new Array<string>({{contracts.length}});

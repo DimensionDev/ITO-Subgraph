@@ -2,6 +2,7 @@
   "chainId": 3,
   "network": "ropsten",
   "mask_to": "0x677f7BbA13108649ECFF068E8B3d55631327B83a",
+  "version": "ITO_V2",  
   "hasCallHandler": true,
   "contracts": [
     {

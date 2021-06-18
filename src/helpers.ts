@@ -1,9 +1,7 @@
 import { Address } from '@graphprotocol/graph-ts'
 import { MASK_CONTRACT_ADDRESS_LIST } from './constants_v1'
 import { CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20 } from './constants'
-import { ERC20 } from '../generated/ITO_V2/ERC20'
-import { ERC20NameBytes } from '../generated/ITO_V2/ERC20NameBytes'
-import { ERC20SymbolBytes } from '../generated/ITO_V2/ERC20SymbolBytes'
+import { ERC20, ERC20NameBytes, ERC20SymbolBytes } from './constants'
 import { Token } from '../generated/schema'
 
 export function isEth(value: string): boolean {
