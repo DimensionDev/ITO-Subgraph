@@ -113,6 +113,24 @@
             },
             {
                 "indexed": false,
+                "internalType": "uint256",
+                "name": "start",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "end",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "address[]",
+                "name": "exchange_addrs",
+                "type": "address[]"
+            },
+            {
+                "indexed": false,
                 "internalType": "uint128[]",
                 "name": "ratios",
                 "type": "uint128[]"
@@ -306,7 +324,7 @@
             },
             {
                 "internalType": "string",
-                "name": "message",
+                "name": "_message",
                 "type": "string"
             },
             {

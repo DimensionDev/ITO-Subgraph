@@ -1,6 +1,7 @@
-import { BigInt } from '@graphprotocol/graph-ts'
+import { BigInt, Address } from '@graphprotocol/graph-ts'
 import { fetchToken } from './helpers'
 import { CHAIN_ID } from './constants'
+import { GENESIS_TIMESTAMP } from './constants_v2'
 import { FillSuccess, DestructSuccess, SwapSuccess } from '../generated/BSC_ITO/ITO_V3'
 import { PoolInfo, BuyInfo, DestructInfo, Pool, Seller, Buyer, Token, SellInfo } from '../generated/schema'
 
@@ -22,6 +23,26 @@ export function handleFillSuccess(event: FillSuccess): void {
   let token = fetchToken(event.params.token_address)
   token.save()  
 
+  // create exchange tokens
+  let addrs = event.params.exchange_addrs as Array<Address>
+  let exchange_addrs = new Array<string>(addrs.length)
+  let exchange_tokens = new Array<Token>(addrs.length)
+  for (let i = 0; i < addrs.length; i += 1) {
+    let token_addr_ = addrs[i] as Address
+    let token_ = fetchToken(token_addr_)
+    token_.save()
+    exchange_tokens[i] = token_
+    exchange_addrs[i] = token_addr_.toHexString()
+  }
+
+  // create exchange volumes
+  let exchange_in_volumes = new Array<BigInt>(addrs.length)
+  let exchange_out_volumes = new Array<BigInt>(addrs.length)
+  for (let i = 0; i < addrs.length; i += 1) {
+    exchange_in_volumes[i] = BigInt.fromI32(0)
+    exchange_out_volumes[i] = BigInt.fromI32(0)
+  }  
+
   poolMap.pid = event.params.id.toHexString()
   poolMap.creation_time = event.params.creation_time.toI32()
 
@@ -41,17 +62,17 @@ export function handleFillSuccess(event: FillSuccess): void {
   pool.limit = event.params.limit
   pool.total = event.params.total
   pool.total_remaining = event.params.total
-  pool.start_time = 0 // retrieve from check_availability()
-  pool.end_time = 0 // retrieve from check_availability()
+  pool.start_time = event.params.start.plus(BigInt.fromI32(GENESIS_TIMESTAMP)).toI32()
+  pool.end_time = event.params.end.plus(BigInt.fromI32(GENESIS_TIMESTAMP)).toI32()
   pool.creation_time = poolMap.creation_time  
   pool.last_updated_time = poolMap.creation_time
   pool.token = token.id
   pool.seller = seller.id
   pool.buyers = []
   pool.exchange_amounts = event.params.ratios
-  pool.exchange_in_volumes = [] // retrieve from check_availability()
-  pool.exchange_out_volumes = [] // retrieve from check_availability()
-  pool.exchange_tokens = [] // retrieve from check_availability()
+  pool.exchange_in_volumes = exchange_in_volumes
+  pool.exchange_out_volumes = exchange_out_volumes
+  pool.exchange_tokens = exchange_addrs
   pool.save()
 
   // create sell info

@@ -6,9 +6,9 @@ dataSources:
     name: BSC_ITO
     network: bsc
     source:
-      address: "0x02Ea0720254F7fa4eca7d09A1b9C783F1020EbEF"
+      address: "0x54a0A221C25Fc0a347EC929cFC5db0be17fA2a2B"
       abi: ITO_V3
-      startBlock: 8374202
+      startBlock: 8398330
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -31,7 +31,7 @@ dataSources:
       eventHandlers:
           - event: SwapSuccess(bytes32,address,address,address,uint256,uint256,uint128)
             handler: handleSwapSuccess
-          - event: FillSuccess(uint256,bytes32,address,uint256,address,string,uint128[],address,uint256)
+          - event: FillSuccess(uint256,bytes32,address,uint256,address,string,uint256,uint256,address[],uint128[],address,uint256)
             handler: handleFillSuccess
           - event: DestructSuccess(bytes32,address,uint256,uint128[])
             handler: handleDestructSuccess
