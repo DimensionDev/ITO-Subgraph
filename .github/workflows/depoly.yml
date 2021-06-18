@@ -52,3 +52,10 @@ jobs:
           yarn build
           yarn deploy-thegraph-bsc --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
         if: startsWith(github.ref, 'refs/heads/develop/bsc')        
+
+      - run: |
+          yarn prepare:polygon
+          yarn codegen
+          yarn build
+          yarn deploy-thegraph-bsc --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
+        if: startsWith(github.ref, 'refs/heads/develop/polygon')                

@@ -1,0 +1,16 @@
+{
+  "chainId": 137,
+  "network": "matic",
+  "hasCallHandler": false,
+  "version": "POLYGON_ITO",
+  "contracts": [
+    {
+      "name": "POLYGON_ITO",
+      "address": "0x981be454a930479d92C91a0092D204b64845A5D6",
+      "startBlock": 15853671,
+      "abi": "ITO_V3",
+      "is_mask": false,
+      "mapping": "mappingV3"
+    }
+  ]
+}
