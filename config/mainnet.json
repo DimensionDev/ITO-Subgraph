@@ -1,6 +1,7 @@
 {
   "chainId": 1,
   "network": "mainnet",
+  "hasCallHandler": true,
   "contracts": [
     {
       "name": "ITO",
