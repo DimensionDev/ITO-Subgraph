@@ -43,7 +43,8 @@ export function handleFillSuccess(event: FillSuccess): void {
   pool.total_remaining = event.params.total
   pool.start_time = 0 // retrieve from check_availability()
   pool.end_time = 0 // retrieve from check_availability()
-  pool.last_updated_time = event.params.creation_time
+  pool.creation_time = poolMap.creation_time  
+  pool.last_updated_time = poolMap.creation_time
   pool.token = token.id
   pool.seller = seller.id
   pool.buyers = []
