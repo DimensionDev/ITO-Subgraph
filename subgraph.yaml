@@ -3,12 +3,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: POLYGON_ITO
-    network: matic
+    name: BSC_ITO
+    network: bsc
     source:
-      address: "0x981be454a930479d92C91a0092D204b64845A5D6"
+      address: "0x96c7D011cdFD467f551605f0f5Fce279F86F4186"
       abi: ITO_V3
-      startBlock: 15853671
+      startBlock: 8508081
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -29,10 +29,10 @@ dataSources:
           file: ./abis/ERC20NameBytes.json
       
       eventHandlers:
-          - event: SwapSuccess(bytes32,address,address,address,uint256,uint256,uint128)
+          - event: SwapSuccess(indexed bytes32,indexed address,address,address,uint256,uint256,uint128)
             handler: handleSwapSuccess
-          - event: FillSuccess(uint256,bytes32,address,uint256,address,string,uint256,uint256,address[],uint128[],address,uint256)
+          - event: FillSuccess(indexed address,indexed bytes32,uint256,uint256,address,string,uint256,uint256,address[],uint128[],address,uint256)
             handler: handleFillSuccess
-          - event: DestructSuccess(bytes32,address,uint256,uint128[])
+          - event: DestructSuccess(indexed bytes32,indexed address,uint256,uint128[])
             handler: handleDestructSuccess
       file: ./src/mappingV3.ts
