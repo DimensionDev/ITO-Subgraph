@@ -16,15 +16,15 @@
   "callHandlers": [],
   "eventHandlers": [
     {
-      "event": "SwapSuccess(bytes32,address,address,address,uint256,uint256,uint128)",
+      "event": "SwapSuccess(indexed bytes32,indexed address,address,address,uint256,uint256,uint128)",
       "handler": "handleSwapSuccess"
     },
     {
-      "event": "FillSuccess(uint256,bytes32,address,uint256,address,string,uint256,uint256,address[],uint128[],address,uint256)",
+      "event": "FillSuccess(indexed uint256,indexed bytes32,address,uint256,address,string,uint256,uint256,address[],uint128[],address,uint256)",
       "handler": "handleFillSuccess"
     },        
     {
-      "event": "DestructSuccess(bytes32,address,uint256,uint128[])",
+      "event": "DestructSuccess(indexed bytes32,indexed address,uint256,uint128[])",
       "handler": "handleDestructSuccess"
     }                
   ]  
