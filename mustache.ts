@@ -6,6 +6,7 @@ import polygonJson from './config/polygon.json'
 import abiV1Json from './config/abi_v1.json'
 import abiV2Json from './config/abi_v2.json'
 import abiV3Json from './config/abi_v3.json'
+import abiV4Json from './config/abi_v4.json'
 import { constantsTmpl, constantsTmplV1, constantsTmplV2 } from './templates/constants'
 import { subgraphYamlTmpl } from './templates/subgraph'
 import mustache from 'mustache'
@@ -33,6 +34,7 @@ const graphHandlers: Readonly<Record<string, GRAPH_HANDLER>> = {
   ITO_V1: abiV1Json,  
   ITO_V2: abiV2Json,
   ITO_V3: abiV3Json,
+  ITO_V4: abiV4Json,
 }
 
 const constantsTmpls = [

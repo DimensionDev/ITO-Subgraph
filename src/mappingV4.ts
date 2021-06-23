@@ -2,7 +2,7 @@ import { BigInt, Address } from '@graphprotocol/graph-ts'
 import { fetchToken } from './helpers'
 import { CHAIN_ID } from './constants'
 import { GENESIS_TIMESTAMP } from './constants_v2'
-import { FillSuccess, DestructSuccess, SwapSuccess } from '../generated/ITO_V4/ITO_V4'
+import { FillSuccess, DestructSuccess, SwapSuccess, Fill_poolCall, SwapCall } from '../generated/ITO_V4/ITO_V4'
 import { PoolInfo, BuyInfo, DestructInfo, Pool, Seller, Buyer, Token, SellInfo } from '../generated/schema'
 
 export function handleFillSuccess(event: FillSuccess): void {
@@ -175,3 +175,7 @@ export function handleDestructSuccess(event: DestructSuccess): void {
   destructInfo.timestamp = event.block.timestamp.toI32()
   destructInfo.save()
 }
+
+export function handleFillPool(call: Fill_poolCall): void {}
+
+export function handleSwapPool(call: SwapCall): void {}
