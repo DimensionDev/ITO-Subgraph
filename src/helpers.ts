@@ -52,7 +52,7 @@ export function fetchToken(tokenAddress: Address): Token {
 
 export function fetchTokenSymbol(tokenAddress: Address, chainId: number): string {
   if (isNative(tokenAddress.toHexString())) {
-    if (isBSC(chainId)) return 'BSC'
+    if (isBSC(chainId)) return 'BNB'
     else if (isMatic(chainId)) return 'MATIC'
     else return 'ETH'
   }
