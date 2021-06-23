@@ -122,7 +122,6 @@ export function handleSwapSuccess(event: SwapSuccess): void {
   buyInfo.amount_bought = event.params.to_value
   buyInfo.token = token.id
   buyInfo.save()
-
   // update pool
   let pool = Pool.load(pool_id);
   if (pool == null) return;
