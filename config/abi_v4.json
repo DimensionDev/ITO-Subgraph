@@ -13,16 +13,7 @@
       "event": "WithdrawSuccess"
     }                        
   ],
-  "callHandlers": [
-    {
-      "function": "fill_pool(bytes32,uint256,uint256,string,address[],uint128[],uint256,address,uint256,uint256,address)",
-      "handler": "handleFillPool"
-    },
-    {
-      "function": "swap(bytes32,bytes32,uint256,uint128,bytes32[])",
-      "handler": "handleSwapPool"
-    }    
-  ],
+  "callHandlers": [],
   "eventHandlers": [
     {
       "event": "SwapSuccess(indexed bytes32,indexed address,address,address,uint256,uint256,uint128)",
