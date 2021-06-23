@@ -20,7 +20,7 @@
       "handler": "handleSwapSuccess"
     },
     {
-      "event": "FillSuccess(indexed address,indexed bytes32,address,uint256,address,string,uint256,uint256,address[],uint128[],address,uint256)",
+      "event": "FillSuccess(indexed address,indexed bytes32,uint256,uint256,address,string,uint256,uint256,address[],uint128[],address,uint256)",
       "handler": "handleFillSuccess"
     },        
     {
