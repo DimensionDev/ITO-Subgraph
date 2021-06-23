@@ -3,7 +3,19 @@ import { MASK_CONTRACT_ADDRESS_LIST } from './constants_v1'
 import { CHAIN_ID, TOKEN_TYPE_ETHER, TOKEN_TYPE_ERC20, ERC20, ERC20NameBytes, ERC20SymbolBytes } from './constants'
 import { Token } from '../generated/schema'
 
-export function isEth(value: string): boolean {
+export function isETH(chain_id: number): boolean {
+  return chain_id == 1
+}
+
+export function isBSC(chain_id: number): boolean {
+  return chain_id == 56
+}
+
+export function isMatic(chain_id: number): boolean {
+  return chain_id == 137
+}
+
+export function isNative(value: string): boolean {
   return value == '0x0000000000000000000000000000000000000000'
 }
 
@@ -29,18 +41,20 @@ export function fetchToken(tokenAddress: Address): Token {
   if (token == null) {
     token = new Token(tokenAddress.toHexString())
   }
-  token.type = isEth(tokenAddress.toHex()) ? TOKEN_TYPE_ETHER : TOKEN_TYPE_ERC20
+  token.type = isNative(tokenAddress.toHex()) ? TOKEN_TYPE_ETHER : TOKEN_TYPE_ERC20
   token.chain_id = CHAIN_ID
   token.address = tokenAddress
-  token.name = fetchTokenName(tokenAddress)
-  token.symbol = fetchTokenSymbol(tokenAddress)
+  token.name = fetchTokenName(tokenAddress, CHAIN_ID)
+  token.symbol = fetchTokenSymbol(tokenAddress, CHAIN_ID)
   token.decimals = fetchTokenDecimals(tokenAddress)
   return token as Token
 }
 
-export function fetchTokenSymbol(tokenAddress: Address): string {
-  if (isEth(tokenAddress.toHexString())) {
-    return 'ETH'
+export function fetchTokenSymbol(tokenAddress: Address, chainId: number): string {
+  if (isNative(tokenAddress.toHexString())) {
+    if (isBSC(chainId)) return 'BSC'
+    else if (isMatic(chainId)) return 'MATIC'
+    else return 'ETH'
   }
 
   let contract = ERC20.bind(tokenAddress)
@@ -64,9 +78,11 @@ export function fetchTokenSymbol(tokenAddress: Address): string {
   return symbolValue
 }
 
-export function fetchTokenName(tokenAddress: Address): string {
-  if (isEth(tokenAddress.toHexString())) {
-    return 'Ether'
+export function fetchTokenName(tokenAddress: Address, chainId: number): string {
+  if (isNative(tokenAddress.toHexString())) {
+    if (isBSC(chainId)) return 'Binance'
+    else if (isMatic(chainId)) return 'Polygon'
+    else return 'Ether'
   }
 
   let contract = ERC20.bind(tokenAddress)
@@ -91,7 +107,7 @@ export function fetchTokenName(tokenAddress: Address): string {
 }
 
 export function fetchTokenDecimals(tokenAddress: Address): i32 {
-  if (isEth(tokenAddress.toHexString())) {
+  if (isNative(tokenAddress.toHexString())) {
     return 18
   }
   let contract = ERC20.bind(tokenAddress)
