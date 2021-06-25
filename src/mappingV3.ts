@@ -151,7 +151,6 @@ export function handleDestructSuccess(event: DestructSuccess): void {
   if (pool == null) return
   pool.total_remaining = BigInt.fromI32(0)
   pool.save()
-
   // create token info
   let token_addr = event.params.token_address.toHexString()
   let token = Token.load(token_addr)
