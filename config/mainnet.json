@@ -55,7 +55,7 @@
     {
       "name": "ITO_V4",
       "address": "0xc2CFbF22d6Dc87D0eE18d38d73733524c109Ff46",
-      "startBlock": 12689641,
+      "startBlock": 12766513,
       "abi": "ITO_V4",
       "is_mask": false,
       "mapping": "mappingV4"      
