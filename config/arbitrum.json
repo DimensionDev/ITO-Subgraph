@@ -1,0 +1,15 @@
+{
+  "chainId": 42161,
+  "network": "arbitrum-one",
+  "hasCallHandler": false,
+  "contracts": [
+    {
+      "name": "ARBITRUM_ITO",
+      "address": "0x71834a3FDeA3E70F14a93ED85c6be70925D0CAd9",
+      "startBlock": 102022,
+      "abi": "ITO_V3",
+      "is_mask": false,
+      "mapping": "mappingV3"
+    }
+  ]
+}
