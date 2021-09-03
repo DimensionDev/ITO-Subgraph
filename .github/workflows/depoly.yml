@@ -2,7 +2,7 @@ name: Deploy subgraph
 
 on:
   push:
-    branches: [master, 'develop/ropsten/**', 'develop/bsc/**', 'develop/polygon/**', 'develop/arbitrum/**']
+    branches: [master, 'develop/ropsten/**', 'develop/bsc/**', 'develop/polygon/**', 'develop/arbitrum/**', 'develop/xdai/**']
 
 jobs:
   deploy:
@@ -65,4 +65,11 @@ jobs:
           yarn codegen
           yarn build
           yarn deploy-thegraph-arbitrum --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
-        if: startsWith(github.ref, 'refs/heads/develop/arbitrum')                
+        if: startsWith(github.ref, 'refs/heads/develop/arbitrum')              
+        
+      - run: |
+          yarn prepare:xdai
+          yarn codegen
+          yarn build
+          yarn deploy-thegraph-xdai --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
+        if: startsWith(github.ref, 'refs/heads/develop/xdai')          

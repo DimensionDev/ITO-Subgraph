@@ -1,0 +1,15 @@
+{
+  "chainId": 100,
+  "network": "xdai",
+  "hasCallHandler": false,
+  "contracts": [
+    {
+      "name": "XdAI_ITO",
+      "address": "0x913975af2Bb8a6Be4100D7dc5e9765B77F6A5d6c",
+      "startBlock": 17865755,
+      "abi": "ITO_V3",
+      "is_mask": false,
+      "mapping": "mappingV3"
+    }
+  ]
+}
