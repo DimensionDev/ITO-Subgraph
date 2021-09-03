@@ -2,7 +2,6 @@
   "chainId": 56,
   "network": "bsc",
   "hasCallHandler": false,
-  "version": "BSC_ITO",
   "contracts": [
     {
       "name": "BSC_ITO",

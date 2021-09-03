@@ -3,6 +3,7 @@ import mainnetJson from './config/mainnet.json'
 import ropstenJson from './config/ropsten.json'
 import bscJson from './config/bsc.json'
 import polygonJson from './config/polygon.json'
+import arbitrumJson from './config/arbitrum.json'
 import abiV1Json from './config/abi_v1.json'
 import abiV2Json from './config/abi_v2.json'
 import abiV3Json from './config/abi_v3.json'
@@ -60,7 +61,8 @@ const configs = {
   ropsten: ropstenJson,
   mainnet: mainnetJson,
   bsc: bscJson,
-  polygon: polygonJson
+  polygon: polygonJson,
+  arbitrum: arbitrumJson
 }
 
 const network = process.env.NETWORK as (keyof typeof configs)
