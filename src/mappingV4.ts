@@ -53,7 +53,7 @@ export function handleFillSuccess(event: FillSuccess): void {
   let pool = new Pool(pool_id)  
 
   pool.is_mask = false
-  pool.block_number = event.block.number
+  pool.block_number = event.block.number.toI32()
   pool.chain_id = CHAIN_ID
   pool.contract_address = event.transaction.to!
   pool.qualification_address = event.params.qualification
