@@ -24,6 +24,7 @@ type Pool @entity {
   id: ID!
   is_mask: Boolean!
   chain_id: Int!
+  block_number: Int!
   contract_address: Bytes!
   qualification_address: Bytes!
   pid: String! # pool id
