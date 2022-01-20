@@ -1,0 +1,16 @@
+{
+  "chainId": 43114,
+  "network": "avalanche",
+  "hasCallHandler": true,
+  "version": "ITO_V2",
+  "contracts": [
+    {
+      "name": "ITO_V4",
+      "address": "0x02Ea0720254F7fa4eca7d09A1b9C783F1020EbEF",
+      "startBlock": 8289892,
+      "abi": "ITO_V4",
+      "is_mask": false,
+      "mapping": "mappingV4"
+    }
+  ]
+}

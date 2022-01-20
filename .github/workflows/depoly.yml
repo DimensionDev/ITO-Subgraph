@@ -2,21 +2,23 @@ name: Deploy subgraph
 
 on:
   push:
-    branches: [
-      master, 
-      'develop/ropsten/**', 
-      'develop/bsc/**', 
-      'develop/polygon/**', 
-      'develop/arbitrum/**', 
-      'develop/xdai/**',
-      'develop/general/**'
-    ]
+    branches:
+      [
+        master,
+        'develop/ropsten/**',
+        'develop/bsc/**',
+        'develop/polygon/**',
+        'develop/arbitrum/**',
+        'develop/xdai/**',
+        'develop/avalanche/**',
+        'develop/general/**',
+      ]
 
 jobs:
   deploy:
     strategy:
       matrix:
-        node: ["12.x"]
+        node: ['12.x']
         os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
@@ -40,7 +42,7 @@ jobs:
 
       - run: yarn
 
-      - run: | 
+      - run: |
           yarn prepare:mainnet
           yarn codegen
           yarn build
@@ -59,25 +61,32 @@ jobs:
           yarn codegen
           yarn build
           yarn deploy-thegraph-bsc --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
-        if: startsWith(github.ref, 'refs/heads/develop/bsc') || startsWith(github.ref, 'refs/heads/develop/general')   
+        if: startsWith(github.ref, 'refs/heads/develop/bsc') || startsWith(github.ref, 'refs/heads/develop/general')
 
       - run: |
           yarn prepare:polygon
           yarn codegen
           yarn build
           yarn deploy-thegraph-polygon --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
-        if: startsWith(github.ref, 'refs/heads/develop/polygon') || startsWith(github.ref, 'refs/heads/develop/general')     
+        if: startsWith(github.ref, 'refs/heads/develop/polygon') || startsWith(github.ref, 'refs/heads/develop/general')
 
       - run: |
           yarn prepare:arbitrum
           yarn codegen
           yarn build
           yarn deploy-thegraph-arbitrum --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
-        if: startsWith(github.ref, 'refs/heads/develop/arbitrum') || startsWith(github.ref, 'refs/heads/develop/general')             
-        
+        if: startsWith(github.ref, 'refs/heads/develop/arbitrum') || startsWith(github.ref, 'refs/heads/develop/general')
+
       - run: |
           yarn prepare:xdai
           yarn codegen
           yarn build
           yarn deploy-thegraph-xdai --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
-        if: startsWith(github.ref, 'refs/heads/develop/xdai') || startsWith(github.ref, 'refs/heads/develop/general')       
+        if: startsWith(github.ref, 'refs/heads/develop/xdai') || startsWith(github.ref, 'refs/heads/develop/general')
+
+      - run: |
+          yarn prepare:avalanche
+          yarn codegen
+          yarn build
+          yarn deploy-thegraph-xdai --access-token ${{ secrets.ACCESS_TOKEN_MAINNET }}
+        if: startsWith(github.ref, 'refs/heads/develop/avalanche') || startsWith(github.ref, 'refs/heads/develop/general')
