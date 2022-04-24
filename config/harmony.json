@@ -1,0 +1,15 @@
+{
+  "chainId": 1666600000,
+  "network": "harmony",
+  "hasCallHandler": false,
+  "contracts": [
+    {
+      "name": "HARMONY_ITO",
+      "address": "0x5b966f3a32db9c180843bcb40267a66b73e4f022",
+      "startBlock": 24133305,
+      "abi": "ITO_V3",
+      "is_mask": false,
+      "mapping": "mappingV3"
+    }
+  ]
+}
